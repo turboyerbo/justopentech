@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Just Open Technologies</title>
+  <meta name="description" content="Just Open Technologies — software and architecture, open by design." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: #002FA7;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; right: 0;
+      padding: 1.4rem 1.8rem;
+      z-index: 100;
+    }
+
+    .jot-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .jot-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .jot-btn img {
+      height: 38px;
+      width: auto;
+      /* invert black logo to white on blue bg */
+      filter: invert(1) brightness(2);
+      transition: opacity 0.15s;
+    }
+
+    .jot-btn:hover img { opacity: 0.75; }
+
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      min-width: 210px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+
+    .jot-wrap:hover .dropdown,
+    .jot-wrap:focus-within .dropdown {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.8rem 1.1rem;
+      color: #002FA7;
+      text-decoration: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #e4e8f5;
+      transition: background 0.12s, color 0.12s;
+    }
+
+    .dropdown a:last-child { border-bottom: none; }
+
+    .dropdown a:hover {
+      background: #002FA7;
+      color: #fff;
+    }
+
+    .dropdown a:hover img { filter: invert(1) brightness(2); }
+
+    .dropdown a img {
+      height: 22px;
+      width: 22px;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: 3px;
+      transition: filter 0.12s;
+    }
+
+    /* ── HERO ── */
+    main {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 8rem;
+      text-align: center;
+    }
+
+    h1 {
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 8vw, 7rem);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #001e6e;
+      color: rgba(255,255,255,0.55);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    footer a:hover { color: #fff; }
+
+    .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="jot-wrap">
+      <button class="jot-btn" aria-label="Just Open Technologies menu" aria-haspopup="true">
+        <img src="images/jot-logo.png" alt="Just Open Technologies" />
+      </button>
+      <div class="dropdown" role="menu">
+        <a href="https://staircode.app" target="_blank" rel="noopener" role="menuitem">
+          <img src="images/staircode-logo.png" alt="" />
+          StairCode
+        </a>
+        <a href="https://justopenarch.com" target="_blank" rel="noopener" role="menuitem">
+          <img src="images/joa-logo.jpg" alt="" />
+          Just Open Arch
+        </a>
+        <a href="/about" role="menuitem">About</a>
+        <a href="/blog" role="menuitem">Blog</a>
+        <a href="/legal" role="menuitem">Legal</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Just Open<br>Technologies</h1>
+  </main>
+
+  <footer>
+    <span>© 2026 Just Open Technologies Inc.</span>
+    <div class="footer-links">
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+      <a href="/legal">Legal</a>
+      <a href="mailto:hello@justopen.tech">hello@justopen.tech</a>
+    </div>
+  </footer>
+
+</body>
+</html>

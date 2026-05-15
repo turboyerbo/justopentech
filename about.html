@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Just Open Technologies</title>
+  <meta name="description" content="About Just Open Technologies and Just Open Architecture." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: #002FA7;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100%;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; right: 0;
+      padding: 1.4rem 1.8rem;
+      z-index: 100;
+    }
+
+    .jot-wrap { position: relative; display: inline-block; }
+
+    .jot-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 0; display: flex; align-items: center;
+    }
+
+    .jot-btn img {
+      height: 38px; width: auto;
+      filter: invert(1) brightness(2);
+      transition: opacity 0.15s;
+    }
+
+    .jot-btn:hover img { opacity: 0.75; }
+
+    .dropdown {
+      position: absolute; top: calc(100% + 0.5rem); right: 0;
+      min-width: 210px; background: #fff;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+
+    .jot-wrap:hover .dropdown,
+    .jot-wrap:focus-within .dropdown {
+      opacity: 1; pointer-events: all; transform: translateY(0);
+    }
+
+    .dropdown a {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.8rem 1.1rem; color: #002FA7; text-decoration: none;
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; border-bottom: 1px solid #e4e8f5;
+      transition: background 0.12s, color 0.12s;
+    }
+
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover { background: #002FA7; color: #fff; }
+    .dropdown a:hover img { filter: invert(1) brightness(2); }
+
+    .dropdown a img {
+      height: 22px; width: 22px; object-fit: contain;
+      flex-shrink: 0; border-radius: 3px; transition: filter 0.12s;
+    }
+
+    /* ── CONTENT ── */
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 7rem 2rem 6rem;
+    }
+
+    .back {
+      display: inline-block;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: color 0.15s;
+    }
+
+    .back:hover { color: #fff; }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.0;
+      margin-bottom: 2.5rem;
+    }
+
+    .section { margin-bottom: 3rem; }
+
+    h2 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 1rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      margin: 2.5rem 0;
+    }
+
+    .people {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .person h3 {
+      font-size: 1rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .person .role {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.8rem;
+    }
+
+    .person p { font-size: 0.9rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #001e6e;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1.6rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: #fff; }
+    .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="jot-wrap">
+      <button class="jot-btn" aria-label="Just Open Technologies menu" aria-haspopup="true">
+        <img src="images/jot-logo.png" alt="Just Open Technologies" />
+      </button>
+      <div class="dropdown" role="menu">
+        <a href="https://staircode.app" target="_blank" rel="noopener" role="menuitem">
+          <img src="images/staircode-logo.png" alt="" /> StairCode
+        </a>
+        <a href="https://justopenarch.com" target="_blank" rel="noopener" role="menuitem">
+          <img src="images/joa-logo.jpg" alt="" /> Just Open Arch
+        </a>
+        <a href="/about" role="menuitem">About</a>
+        <a href="/blog" role="menuitem">Blog</a>
+        <a href="/legal" role="menuitem">Legal</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
+    <a class="back" href="/">← Home</a>
+
+    <h1>About</h1>
+
+    <div class="section">
+      <h2>Who We Are</h2>
+      <p>Just Open Technologies is a software company built on a simple idea: the tools that architects, inspectors, and builders rely on every day should be as rigorous as the codes they enforce — and as easy to use as the phone in your pocket.</p>
+      <p>We sit at the intersection of architecture and technology. Our products are shaped by real practice, real code expertise, and a deep understanding of what it means to be accountable for a built environment.</p>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <h2>Just Open Architecture</h2>
+      <p>Just Open Technologies grew out of Just Open Architecture (JOA), a practice founded in 2014 in Rotterdam by Canadian architect Jordan Yerbury and Chinese architect Kai Wang. JOA brought together computational design, building technology, and cross-cultural practice — the same principles that now drive our software.</p>
+      <p>JOA continues to operate as an independent architecture practice, and the two firms share a common commitment to rigour, openness, and doing the technical work properly.</p>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <h2>stAIrcode</h2>
+      <p>stAIrcode is our flagship product — a mobile app that checks staircase compliance against local building codes using your phone camera. It supports the Ontario Building Code (OBC), National Building Code (NBC), Quebec Building Code (QBC), New York Building Code (Bbl, RCNYS), and more, with AI-assisted measurements and auto-detected jurisdiction.</p>
+      <p>Built for architects, contractors, inspectors, and homeowners, stAIrcode replaces the tape measure and the code book with a single tool that fits in your hand.</p>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <h2>The Team</h2>
+      <div class="people">
+        <div class="person">
+          <h3>Jordan Yerbury</h3>
+          <div class="role">Founder — Toronto, Canada</div>
+          <p>Jordan is a licensed architect with the Ontario Association of Architects (OAA). He holds a Master of Science in Architecture from Delft University of Technology and a Bachelor of Architectural Studies from Carleton University. His career spans firms including Hariri Pontarini Architects, CORE Architects, and NORR, alongside roles in building technology software development. Jordan co-founded Just Open Architecture with Kai Wang in Rotterdam in 2014.</p>
+        </div>
+        <div class="person">
+          <h3>Kai Wang</h3>
+          <div class="role">Co-Founder — Shanghai, China</div>
+          <p>Kai is a licensed Dutch architect with a practice based in Shanghai, China. He co-founded Just Open Architecture with Jordan in Rotterdam in 2014, bringing together computational design expertise and a cross-continental perspective on architecture and construction practice.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Just Open Technologies Inc.</span>
+    <div class="footer-links">
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+      <a href="/legal">Legal</a>
+      <a href="mailto:hello@justopen.tech">hello@justopen.tech</a>
+    </div>
+  </footer>
+
+</body>
+</html>
