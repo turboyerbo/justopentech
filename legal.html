@@ -4,72 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legal — Just Open Technologies</title>
-  <meta name="description" content="Legal notices, disclaimers, and terms for Just Open Technologies." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      background: #002FA7;
-      color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100%;
-    }
+    html, body { background: #002FA7; color: #fff; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; min-height: 100%; }
 
     nav { position: fixed; top: 0; right: 0; padding: 1.4rem 1.8rem; z-index: 100; }
     .jot-wrap { position: relative; display: inline-block; }
     .jot-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; }
-    .jot-btn img { height: 38px; width: auto; filter: invert(1) brightness(2); transition: opacity 0.15s; }
-    .jot-btn:hover img { opacity: 0.75; }
+    .jot-btn:hover svg { opacity: 0.75; }
     .dropdown {
-      position: absolute; top: calc(100% + 0.5rem); right: 0;
-      min-width: 210px; background: #fff;
-      display: flex; flex-direction: column;
-      opacity: 0; pointer-events: none;
-      transform: translateY(-6px);
-      transition: opacity 0.18s ease, transform 0.18s ease;
+      position: absolute; top: calc(100% + 0.5rem); right: 0; min-width: 210px; background: #fff;
+      display: flex; flex-direction: column; opacity: 0; pointer-events: none;
+      transform: translateY(-6px); transition: opacity 0.18s ease, transform 0.18s ease;
       box-shadow: 0 8px 32px rgba(0,0,0,0.18);
     }
-    .jot-wrap:hover .dropdown, .jot-wrap:focus-within .dropdown {
-      opacity: 1; pointer-events: all; transform: translateY(0);
-    }
+    .jot-wrap:hover .dropdown, .jot-wrap:focus-within .dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
     .dropdown a {
-      display: flex; align-items: center; gap: 0.7rem;
-      padding: 0.8rem 1.1rem; color: #002FA7; text-decoration: none;
-      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; border-bottom: 1px solid #e4e8f5;
+      display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.1rem;
+      color: #002FA7; text-decoration: none; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid #e4e8f5;
       transition: background 0.12s, color 0.12s;
     }
     .dropdown a:last-child { border-bottom: none; }
     .dropdown a:hover { background: #002FA7; color: #fff; }
-    .dropdown a:hover img { filter: invert(1) brightness(2); }
-    .dropdown a img { height: 22px; width: 22px; object-fit: contain; flex-shrink: 0; border-radius: 3px; transition: filter 0.12s; }
 
     .page { max-width: 680px; margin: 0 auto; padding: 7rem 2rem 6rem; }
-
-    .back {
-      display: inline-block; color: rgba(255,255,255,0.6);
-      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-      text-decoration: none; margin-bottom: 3rem; transition: color 0.15s;
-    }
+    .back { display: inline-block; color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; margin-bottom: 3rem; transition: color 0.15s; }
     .back:hover { color: #fff; }
-
     h1 { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 900; text-transform: uppercase; line-height: 1.0; margin-bottom: 0.6rem; }
     .last-updated { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3rem; }
-
     h2 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin: 2.5rem 0 0.8rem; }
-
     p { font-size: 0.92rem; line-height: 1.75; color: rgba(255,255,255,0.82); margin-bottom: 0.9rem; }
     p:last-child { margin-bottom: 0; }
-
     hr { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 2rem 0; }
 
-    footer {
-      background: #001e6e; color: rgba(255,255,255,0.55);
-      font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 1.6rem 2rem; display: flex; flex-wrap: wrap;
-      align-items: center; justify-content: space-between; gap: 0.8rem;
-    }
+    footer { background: #001e6e; color: rgba(255,255,255,0.55); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 1.6rem 2rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem; }
     footer a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.15s; }
     footer a:hover { color: #fff; }
     .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
@@ -80,14 +49,28 @@
   <nav>
     <div class="jot-wrap">
       <button class="jot-btn" aria-label="Just Open Technologies menu" aria-haspopup="true">
-        <img src="images/jot-logo.png" alt="Just Open Technologies" />
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="22" width="38" height="38">
+          <path d="M 86,45 L 194,145 Q 205,155 205,170 L 205,428 Q 205,448 185,448 L 95,448 Q 75,448 75,428 L 75,50 Q 75,35 86,45 Z"/>
+          <path d="M 426,45 L 318,145 Q 307,155 307,170 L 307,428 Q 307,448 327,448 L 417,448 Q 437,448 437,428 L 437,50 Q 437,35 426,45 Z"/>
+        </svg>
       </button>
       <div class="dropdown" role="menu">
         <a href="https://staircode.app" target="_blank" rel="noopener" role="menuitem">
-          <img src="images/staircode-logo.png" alt="" /> StairCode
+          <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="border-radius:3px;flex-shrink:0">
+            <rect width="512" height="512" fill="#1050C8" rx="52"/>
+            <path d="M 413,165 A 182,182 0 0,1 165,413" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
+            <path d="M 99,347 A 182,182 0 0,1 347,99" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
+            <circle cx="256" cy="256" r="157" fill="white"/>
+            <path d="M 148,200 L 282,200 L 282,310 L 368,310" fill="none" stroke="#7A8CA0" stroke-width="44" stroke-linecap="square" stroke-linejoin="miter"/>
+          </svg>
+          StairCode
         </a>
         <a href="https://justopenarch.com" target="_blank" rel="noopener" role="menuitem">
-          <img src="images/joa-logo.jpg" alt="" /> Just Open Arch
+          <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="22" width="22" height="22" style="flex-shrink:0">
+            <path d="M 90,42 L 190,42 Q 205,42 205,57 L 205,318 Q 205,333 210,347 L 256,472 L 95,472 Q 75,472 75,452 L 75,57 Q 75,42 90,42 Z"/>
+            <path d="M 322,42 L 422,42 Q 437,42 437,57 L 437,452 Q 437,472 417,472 L 256,472 L 302,347 Q 307,333 307,318 L 307,57 Q 307,42 322,42 Z"/>
+          </svg>
+          Just Open Arch
         </a>
         <a href="/about" role="menuitem">About</a>
         <a href="/blog" role="menuitem">Blog</a>
@@ -98,29 +81,27 @@
 
   <main class="page">
     <a class="back" href="/">← Home</a>
-
     <h1>Legal</h1>
     <p class="last-updated">Last updated: May 2026</p>
 
     <h2>General Disclaimer</h2>
-    <p>The information and tools provided by Just Open Technologies Inc. ("Just Open Tech", "we", "us", or "our") — including this website and all associated software products — are provided on an "as is" and "as available" basis, without warranty of any kind, express or implied. We make no representations or warranties regarding the accuracy, completeness, reliability, or suitability of any content or functionality for any particular purpose.</p>
-    <p>Your use of any Just Open Tech product or service is entirely at your own risk.</p>
+    <p>The information and tools provided by Just Open Technologies Inc. ("Just Open Tech", "we", "us", or "our") — including this website and all associated software products — are provided on an "as is" and "as available" basis, without warranty of any kind, express or implied.</p>
 
     <hr />
 
     <h2>Not Professional or Regulatory Advice</h2>
     <p>Nothing on this website or in any Just Open Tech product constitutes professional architectural, engineering, legal, or regulatory advice. stAIrcode and other tools are designed to assist users in understanding potential compliance issues and should not be relied upon as a substitute for a licensed professional's review, judgment, or certification.</p>
-    <p>Building codes, standards, and local regulations vary and change over time. Always consult a licensed architect, engineer, or qualified building official before making decisions based on any output from our software. Just Open Technologies assumes no liability for any decisions made on the basis of information provided by our products.</p>
+    <p>Building codes, standards, and local regulations vary and change over time. Always consult a licensed architect, engineer, or qualified building official before making decisions based on any output from our software.</p>
 
     <hr />
 
     <h2>Limitation of Liability</h2>
-    <p>To the maximum extent permitted by applicable law, Just Open Technologies Inc. and its founders, officers, employees, and agents shall not be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with your use of — or inability to use — this website or any of our products, even if we have been advised of the possibility of such damages.</p>
+    <p>To the maximum extent permitted by applicable law, Just Open Technologies Inc. and its founders, officers, employees, and agents shall not be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with your use of — or inability to use — this website or any of our products.</p>
 
     <hr />
 
     <h2>Intellectual Property</h2>
-    <p>All content on this website, including but not limited to text, logos, graphics, software, and product names, is the property of Just Open Technologies Inc. or its licensors and is protected by applicable intellectual property laws. Unauthorized reproduction, distribution, or use of any content is prohibited without express written permission.</p>
+    <p>All content on this website, including but not limited to text, logos, graphics, software, and product names, is the property of Just Open Technologies Inc. or its licensors and is protected by applicable intellectual property laws.</p>
 
     <hr />
 
@@ -130,17 +111,17 @@
     <hr />
 
     <h2>Privacy</h2>
-    <p>Just Open Technologies respects your privacy. We do not sell your personal information. Any data collected through our products is used solely to provide and improve our services. For detailed information about data handling, please contact us at <a href="mailto:hello@justopen.tech" style="color:#fff;">hello@justopen.tech</a>.</p>
+    <p>Just Open Technologies respects your privacy. We do not sell your personal information. Any data collected through our products is used solely to provide and improve our services. For detailed information, contact us at <a href="mailto:hello@justopen.tech" style="color:#fff;">hello@justopen.tech</a>.</p>
 
     <hr />
 
     <h2>Governing Law</h2>
-    <p>These terms and any disputes arising from them shall be governed by and construed in accordance with the laws of the Province of Ontario and the federal laws of Canada applicable therein, without regard to conflict of law principles.</p>
+    <p>These terms and any disputes arising from them shall be governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein.</p>
 
     <hr />
 
     <h2>Contact</h2>
-    <p>For any legal inquiries, please contact: <a href="mailto:hello@justopen.tech" style="color:#fff;">hello@justopen.tech</a></p>
+    <p><a href="mailto:hello@justopen.tech" style="color:#fff;">hello@justopen.tech</a></p>
   </main>
 
   <footer>
