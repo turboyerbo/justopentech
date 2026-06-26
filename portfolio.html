@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Jordan Yerbury, Architect</title>
+  <meta name="description" content="Selected works by Jordan Yerbury, Architect OAA — hospitality, industrial, residential, and software." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #002FA7; color: #fff; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; min-height: 100%; }
+
+    /* ── NAV (shared) ── */
+    nav { position: fixed; top: 0; right: 0; padding: 1.4rem 1.8rem; z-index: 100; }
+    .jot-wrap { position: relative; display: inline-block; }
+    .jot-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; }
+    .jot-btn:hover svg { opacity: 0.75; }
+    .dropdown {
+      position: absolute; top: calc(100% + 0.5rem); right: 0; min-width: 210px; background: #fff;
+      display: flex; flex-direction: column; opacity: 0; pointer-events: none;
+      transform: translateY(-6px); transition: opacity 0.18s ease, transform 0.18s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+    .jot-wrap:hover .dropdown, .jot-wrap:focus-within .dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .dropdown a {
+      display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.1rem;
+      color: #002FA7; text-decoration: none; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid #e4e8f5;
+      transition: background 0.12s, color 0.12s;
+    }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown a:hover { background: #002FA7; color: #fff; }
+    .dropdown a.active { background: rgba(0,47,167,0.06); }
+
+    /* ── PAGE ── */
+    .page { max-width: 860px; margin: 0 auto; padding: 6rem 2rem 5rem; }
+
+    /* ── HEADER ── */
+    .port-header {
+      display: flex; flex-wrap: wrap; align-items: flex-end;
+      justify-content: space-between; gap: 1.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 2px solid #fff;
+      margin-bottom: 0;
+    }
+    .port-title {
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      font-weight: 900; text-transform: uppercase;
+      line-height: 0.95; letter-spacing: -0.02em;
+    }
+    .port-sub {
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); margin-top: 0.7rem;
+    }
+    .port-sub .sep { margin: 0 0.4rem; opacity: 0.4; }
+
+    /* ── PDF DOWNLOAD ── */
+    .dl-btn {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: #fff; color: #002FA7;
+      padding: 0.8rem 1.4rem; text-decoration: none;
+      font-weight: 900; font-size: 0.8rem; letter-spacing: 0.1em;
+      text-transform: uppercase; transition: background 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .dl-btn:hover { background: #e8eaf5; }
+    .dl-size { font-size: 0.6rem; font-weight: 400; color: #6677aa; margin-top: 0.15rem; letter-spacing: 0.06em; }
+
+    /* ── FILTERS ── */
+    .filters {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .filter-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.6);
+      padding: 0.3rem 0.8rem; font-family: Arial, sans-serif; font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover, .filter-btn.active { background: #fff; color: #002FA7; border-color: #fff; }
+
+    /* ── PROJECTS ── */
+    .projects { counter-reset: proj; }
+
+    .project {
+      counter-increment: proj;
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 1.5rem;
+      padding: 2.2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.13);
+    }
+
+    .proj-num {
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.28); padding-top: 0.35rem;
+      font-weight: 700;
+    }
+    .proj-num::before { content: counter(proj, decimal-leading-zero); }
+
+    .proj-type {
+      display: inline-block; font-size: 0.6rem; letter-spacing: 0.14em;
+      text-transform: uppercase; background: #fff; color: #002FA7;
+      padding: 0.18rem 0.5rem; margin-bottom: 0.65rem; font-weight: 700;
+    }
+
+    .proj-name {
+      font-size: clamp(1.05rem, 2.8vw, 1.5rem);
+      font-weight: 900; text-transform: uppercase;
+      line-height: 1.1; letter-spacing: -0.01em;
+      margin-bottom: 0.55rem;
+    }
+
+    .proj-meta {
+      display: flex; flex-wrap: wrap; gap: 0.2rem 1.2rem;
+      font-size: 0.75rem; color: rgba(255,255,255,0.55);
+      letter-spacing: 0.03em; margin-bottom: 0.9rem;
+    }
+
+    .proj-desc {
+      font-size: 0.88rem; line-height: 1.68;
+      color: rgba(255,255,255,0.8); margin-bottom: 1rem; max-width: 620px;
+    }
+
+    .proj-stats {
+      display: flex; flex-wrap: wrap; gap: 0.8rem 2rem;
+    }
+    .stat { display: flex; flex-direction: column; gap: 0.2rem; }
+    .stat-label {
+      font-size: 0.58rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+    }
+    .stat-value { font-size: 0.8rem; font-weight: 700; color: #fff; }
+
+    /* ── SOFTWARE SECTION DIVIDER ── */
+    .section-divider {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); padding: 2rem 0 0;
+      border-top: 2px solid rgba(255,255,255,0.15);
+      margin-top: 0.5rem;
+    }
+
+    /* ── AFFILIATIONS ── */
+    .affiliations {
+      padding: 2.5rem 0 1rem;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      margin-top: 0.5rem;
+    }
+    .affiliations h3 {
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 0.8rem;
+    }
+    .affiliations ul {
+      list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 2rem;
+    }
+    .affiliations li { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #001e6e; color: rgba(255,255,255,0.55); font-size: 0.72rem;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 1.6rem 2rem;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 0.8rem;
+    }
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: #fff; }
+    .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 520px) {
+      .project { grid-template-columns: 1fr; }
+      .proj-num { display: none; }
+      .port-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="jot-wrap">
+      <button class="jot-btn" aria-label="Just Open Technologies menu" aria-haspopup="true">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="22" width="38" height="38">
+          <path d="M 86,45 L 194,145 Q 205,155 205,170 L 205,428 Q 205,448 185,448 L 95,448 Q 75,448 75,428 L 75,50 Q 75,35 86,45 Z"/>
+          <path d="M 426,45 L 318,145 Q 307,155 307,170 L 307,428 Q 307,448 327,448 L 417,448 Q 437,448 437,428 L 437,50 Q 437,35 426,45 Z"/>
+        </svg>
+      </button>
+      <div class="dropdown" role="menu">
+        <a href="https://staircode.app" target="_blank" rel="noopener" role="menuitem">
+          <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="border-radius:3px;flex-shrink:0">
+            <rect width="512" height="512" fill="#1050C8" rx="52"/>
+            <path d="M 413,165 A 182,182 0 0,1 165,413" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
+            <path d="M 99,347 A 182,182 0 0,1 347,99" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
+            <circle cx="256" cy="256" r="157" fill="white"/>
+            <path d="M 148,200 L 282,200 L 282,310 L 368,310" fill="none" stroke="#7A8CA0" stroke-width="44" stroke-linecap="square" stroke-linejoin="miter"/>
+          </svg>
+          StairCode
+        </a>
+        <a href="/portfolio" role="menuitem" class="active">Projects</a>
+        <a href="https://justopenarch.com" target="_blank" rel="noopener" role="menuitem">Just Open Arch</a>
+        <a href="/about" role="menuitem">About</a>
+        <a href="/blog" role="menuitem">Blog</a>
+        <a href="/legal" role="menuitem">Legal</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <div class="port-header">
+      <div>
+        <h1 class="port-title">Selected<br>Works</h1>
+        <p class="port-sub">Jordan Yerbury<span class="sep">·</span>Architect OAA<span class="sep">·</span>MRAIC<span class="sep">·</span>AIA</p>
+      </div>
+      <!--
+        PDF DOWNLOAD: Upload your PDF to your Netlify repo root directory
+        (same folder as index.html) and update the href below.
+        Example: href="/Jordan_Yerbury_Portfolio_2026.pdf"
+        Or use a Google Drive direct-download link.
+      -->
+      <a class="dl-btn" href="/Jordan_Yerbury_Portfolio_2026.pdf" download>
+        ↓ Download Portfolio
+        <span class="dl-size">PDF · High Resolution · 30 MB</span>
+      </a>
+    </div>
+
+    <!-- ================================================================
+         PROJECTS LIST
+         To add a new project: copy one complete .project block below,
+         paste it at the top of .projects (after the opening div tag),
+         and update all fields. Project numbers update automatically.
+         ================================================================ -->
+    <main class="projects">
+
+      <!-- PROJECT: AUTOGRAPH HOTEL ----------------------------------- -->
+      <div class="project" data-type="hospitality">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Hospitality</div>
+          <h2 class="proj-name">Autograph Collection Hotel<br>Calgary on Stampede Park</h2>
+          <div class="proj-meta">
+            <span>Architect Technical</span>
+            <span>NORR Architects &amp; Engineers</span>
+            <span>Calgary, AB, Canada</span>
+            <span>June 2025 – Present</span>
+          </div>
+          <p class="proj-desc">318-key, 17-storey full-service hotel positioned as the first year-round hospitality anchor within Calgary's emerging Culture + Entertainment District. Situated as the western gateway to Stampede Park and integrated with the expanded BMO Centre. Design draws on Western heritage — leather, wood, denim — through a contemporary lens. Connected to Calgary's district energy system.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Size</span><span class="stat-value">320,388 SF</span></div>
+            <div class="stat"><span class="stat-label">Value</span><span class="stat-value">$330M CAD</span></div>
+            <div class="stat"><span class="stat-label">Client</span><span class="stat-value">Truman / Marriott</span></div>
+            <div class="stat"><span class="stat-label">Keys</span><span class="stat-value">318 / 17 Storeys</span></div>
+            <div class="stat"><span class="stat-label">Completion</span><span class="stat-value">2028</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT: BALLY'S BATON ROUGE ------------------------------- -->
+      <div class="project" data-type="hospitality">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Hospitality · Gaming · Adaptive Re-Use</div>
+          <h2 class="proj-name">Bally's — Belle of Baton Rouge<br>Casino, Hotel &amp; Public Realm</h2>
+          <div class="proj-meta">
+            <span>Technical Designer</span>
+            <span>NORR Architects &amp; Engineers</span>
+            <span>Baton Rouge, LA, USA</span>
+            <span>2022 – 2024</span>
+          </div>
+          <p class="proj-desc">Multi-phase redevelopment of a former dockside casino into a cohesive mixed-use destination. Scope included: public realm and south carpark redevelopment (valet, accessibility, lighting, emergency systems, wayfinding); casino exterior redesign including porte-cochère and east entrance canopy; conversion of enclosed mall atrium to modern casino gaming floor; comprehensive renovation of 10-storey, 249-room hotel including back-of-house, guestrooms, and MEP/FP upgrades; retractable roof system (ShadeFX, Toronto) integrated with existing atrium structure for day/night modes; and hotel mock-up room. Fast-track GMP delivery.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Public Realm</span><span class="stat-value">120,000 SF</span></div>
+            <div class="stat"><span class="stat-label">Hotel</span><span class="stat-value">160,000 SF</span></div>
+            <div class="stat"><span class="stat-label">Value</span><span class="stat-value">$80M USD</span></div>
+            <div class="stat"><span class="stat-label">Hotel Rooms</span><span class="stat-value">249 / 10 Storeys</span></div>
+            <div class="stat"><span class="stat-label">Delivery</span><span class="stat-value">GMP Fast-Track</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT: CRONOS ------------------------------------------- -->
+      <div class="project" data-type="industrial">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Industrial · Technical</div>
+          <h2 class="proj-name">Cronos — Process Area<br>&amp; Demising Wall</h2>
+          <div class="proj-meta">
+            <span>Technical Designer</span>
+            <span>NORR Architects &amp; Engineers</span>
+            <span>Ontario, Canada</span>
+          </div>
+          <p class="proj-desc">Compensatory alternative solution for a 1-hour fire-rated demising partition with smoke seal in an existing sprinklered building using insulated metal panel (IMP) as a sprinkler-protected window system. Developed detailed technical documentation for IMP process area, corridor partition systems, ceiling hanger rod connections, thermally broken window frames, and fire safety plans per OBC compliance. Alternative solution subject to AHJ review.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">System</span><span class="stat-value">1-Hr FRR / IMP</span></div>
+            <div class="stat"><span class="stat-label">Code</span><span class="stat-value">OBC / ULC</span></div>
+            <div class="stat"><span class="stat-label">Scope</span><span class="stat-value">Alternative Solution</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT: GRANITE REIT ------------------------------------- -->
+      <div class="project" data-type="industrial">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Industrial · Logistics</div>
+          <h2 class="proj-name">Granite REIT — Telephone City<br>Logistics Centre, Building 1</h2>
+          <div class="proj-meta">
+            <span>Designer</span>
+            <span>NORR Architects &amp; Engineers</span>
+            <span>Brantford, ON, Canada</span>
+            <span>2022</span>
+          </div>
+          <p class="proj-desc">Master planning and multidisciplinary design for a 420,000+ SF industrial warehouse on a non-rectangular 92-acre site. Developed 12 site iterations, arriving at six optimized rectangular buildings on a standard industrial structural grid. Provided full design and contract administration for Building 1. Barry Callebaut was the first major tenant — adaptation of a speculative industrial shell for food-grade production including GMP compliance, ventilation, life safety, sanitation, and structural modifications. A 39,679 SF mezzanine maximizes vertical space. Project received 2 Green Globe certificates.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Size</span><span class="stat-value">420,339 SF</span></div>
+            <div class="stat"><span class="stat-label">Site</span><span class="stat-value">92 Acres</span></div>
+            <div class="stat"><span class="stat-label">Client</span><span class="stat-value">Granite Property Nominee Inc.</span></div>
+            <div class="stat"><span class="stat-label">Tenant</span><span class="stat-value">Barry Callebaut</span></div>
+            <div class="stat"><span class="stat-label">Certification</span><span class="stat-value">2× Green Globe</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT: HYATT ADA ---------------------------------------- -->
+      <div class="project" data-type="hospitality">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Hospitality · Accessibility</div>
+          <h2 class="proj-name">Hyatt Hotels — ADA Compliance<br>Renovation Program</h2>
+          <div class="proj-meta">
+            <span>Project Lead</span>
+            <span>NORR Architects &amp; Engineers</span>
+            <span>Various Locations, USA</span>
+          </div>
+          <p class="proj-desc">Led barrier-free design evaluations for seventeen Hyatt hotels across the United States. Reviewed detailed site reports and developed architectural drawings for each location to meet ADA requirements. Unique exterior and interior conditions were addressed on a per-site, per-jurisdiction basis. Budgets under $1M per site. Documents for construction centered on meeting ADA definitions for barrier-free design.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Sites</span><span class="stat-value">17 Hotels</span></div>
+            <div class="stat"><span class="stat-label">Standard</span><span class="stat-value">ADA / Barrier-Free</span></div>
+            <div class="stat"><span class="stat-label">Budget</span><span class="stat-value">&lt;$1M / Site</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT: QUEEN MARQUETTE ---------------------------------- -->
+      <div class="project" data-type="hospitality">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Hospitality · Gaming</div>
+          <h2 class="proj-name">Queen Marquette Casino<br>Renovation &amp; Expansion</h2>
+          <div class="proj-meta">
+            <span>Technical Designer</span>
+            <span>NORR Architects &amp; Engineers</span>
+            <span>Marquette, IA, USA</span>
+          </div>
+          <p class="proj-desc">Complex phased renovation and expansion transforming the legacy Queen Marquette into a modern land-based destination. Phase 1: Pre-engineered metal building (PEMB) on the west side for back-of-house and gaming floor expansion. Phase 2: Two-storey steel-framed south addition including new lobby, extended gaming floor, and refurbished restaurant facilities. Spanning multiple construction packages and deferred submittals.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Size</span><span class="stat-value">80,000 SF</span></div>
+            <div class="stat"><span class="stat-label">Phases</span><span class="stat-value">2 (PEMB + Steel Addition)</span></div>
+            <div class="stat"><span class="stat-label">Delivery</span><span class="stat-value">Phased / Deferred Submittals</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT: ARTIST'S ALLEY ----------------------------------- -->
+      <div class="project" data-type="residential">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Residential · Mixed-Use</div>
+          <h2 class="proj-name">Artist's Alley &amp; Various<br>High-Rise Residential</h2>
+          <div class="proj-meta">
+            <span>Façade Designer / Architectural Designer</span>
+            <span>Hariri Pontarini Architects · CORE Architects</span>
+            <span>Toronto &amp; Mississauga, ON</span>
+            <span>2017 – 2019</span>
+          </div>
+          <p class="proj-desc">At Hariri Pontarini: façade design and preliminary structural analysis for Artist's Alley, a transformative mixed-use tower in downtown Toronto with 918 residential units ranging 340–950 SF. Coordinated curtain wall diagrid system with structural engineers; developed cast-in plates, HSS brackets, and aluminium panel cladding details. At CORE Architects: design updates for M4 (Phase 3 of multi-tower Mississauga development alongside IBI-designed M3), and 3D modelling, site plans, elevations and SD perspectives for 1001 Queensway mixed-use building.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Units (Artist's Alley)</span><span class="stat-value">918</span></div>
+            <div class="stat"><span class="stat-label">Scope</span><span class="stat-value">Façade / Structural Analysis</span></div>
+            <div class="stat"><span class="stat-label">Firms</span><span class="stat-value">HPA + CORE</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT: YELLOW SHOES ------------------------------------- -->
+      <div class="project" data-type="retail">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Retail</div>
+          <h2 class="proj-name">Yellow Shoes &amp; Cité Shoes<br>Store Design</h2>
+          <div class="proj-meta">
+            <span>Architectural Designer</span>
+            <span>Rubin+Goldenberg Architects (RGA)</span>
+            <span>Ottawa, Montréal, Rosemère, QC &amp; ON</span>
+            <span>2012</span>
+          </div>
+          <p class="proj-desc">Re-branding design for a series of retail shoe stores across Ontario and Quebec. Cité Shoes (Place Rosemère, November 2012): custom arborite panels, precision aluminum mullions, and bespoke furniture. Yellow Shoes storefronts: security door systems on hidden tracks, custom stainless steel frames, concealed lighting fixtures. Clean commercial quality delivered efficiently.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Locations</span><span class="stat-value">Multiple</span></div>
+            <div class="stat"><span class="stat-label">Type</span><span class="stat-value">Retail Re-Brand</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SOFTWARE ──────────────────────────────────────────── -->
+      <div class="section-divider">Software</div>
+
+      <!-- PROJECT: STAIRCODE ---------------------------------------- -->
+      <div class="project" data-type="software">
+        <div class="proj-num"></div>
+        <div>
+          <div class="proj-type">Software · Technology</div>
+          <h2 class="proj-name">stAIrcode<br>AI Building Code Compliance App</h2>
+          <div class="proj-meta">
+            <span>Founder &amp; Developer</span>
+            <span>Just Open Technologies Inc.</span>
+            <span>Toronto, ON / Global</span>
+            <span>2026 – Present</span>
+          </div>
+          <p class="proj-desc">Mobile-first app using AI vision and AR-guided measurement to check staircase compliance against local building codes. Supports OBC, NBC, QBC, New York Building Code (Bbl, RCNYS), and international jurisdictions. Built for architects, contractors, building inspectors, and homeowners. Features include camera-based stair scanning, auto-detected jurisdiction, PDF compliance reports, and 7-day free trial.</p>
+          <div class="proj-stats">
+            <div class="stat"><span class="stat-label">Platform</span><span class="stat-value">iOS / Android / Web</span></div>
+            <div class="stat"><span class="stat-label">Codes</span><span class="stat-value">OBC · NBC · QBC · NYC · IBC</span></div>
+            <div class="stat"><span class="stat-label">Link</span><span class="stat-value"><a href="https://staircode.app" target="_blank" style="color:#fff;">staircode.app</a></span></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <div class="affiliations">
+      <h3>Professional Affiliations</h3>
+      <ul>
+        <li>Ontario Association of Architects (OAA)</li>
+        <li>Toronto Society of Architects</li>
+        <li>Member Royal Architectural Institute of Canada (MRAIC)</li>
+        <li>AIA International Associate</li>
+      </ul>
+    </div>
+
+  </div><!-- /page -->
+
+  <footer>
+    <span>© 2026 Just Open Technologies Inc.</span>
+    <div class="footer-links">
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+      <a href="/legal">Legal</a>
+      <a href="mailto:hello@justopen.tech">hello@justopen.tech</a>
+    </div>
+  </footer>
+
+</body>
+</html>
