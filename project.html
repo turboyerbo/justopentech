@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project — Jordan Yerbury, Architect</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; background: #fff; color: #111; min-height: 100%; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: #002FA7; color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.2rem; height: 52px; gap: 1rem;
+    }
+    .topbar-back {
+      display: flex; align-items: center; gap: 0.4rem;
+      color: #fff; text-decoration: none; font-size: 0.78rem;
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .topbar-back:hover { opacity: 0.75; }
+    .topbar-title {
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; text-align: center; flex: 1;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .topbar-counter {
+      font-size: 0.72rem; letter-spacing: 0.08em; opacity: 0.7;
+      flex-shrink: 0; white-space: nowrap;
+    }
+
+    /* ── CONTENT ── */
+    .viewer { padding-top: 52px; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── IMAGE ── */
+    .slide-image-wrap { background: #111; width: 100%; }
+    .slide-image-wrap img { width: 100%; display: block; max-height: 70vh; object-fit: cover; }
+    .no-image {
+      width: 100%; aspect-ratio: 16/9; max-height: 70vh;
+      background: #1a1a1a; display: flex; align-items: center; justify-content: center;
+    }
+    .no-image span { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+
+    /* ── INFO ── */
+    .slide-info { padding: 2rem 1.5rem 6rem; max-width: 860px; margin: 0 auto; width: 100%; }
+
+    .slide-type {
+      display: inline-block; font-size: 0.6rem; letter-spacing: 0.14em;
+      text-transform: uppercase; background: #002FA7; color: #fff;
+      padding: 0.18rem 0.5rem; margin-bottom: 0.9rem; font-weight: 700;
+    }
+    .slide-title { font-size: clamp(1.3rem, 4vw, 2.2rem); font-weight: 900; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.01em; }
+    .slide-sub { font-size: 0.9rem; color: #555; margin-top: 0.25rem; }
+
+    .slide-meta {
+      display: flex; flex-wrap: wrap; gap: 0.2rem 1.4rem;
+      font-size: 0.75rem; color: #777; margin: 1rem 0 1.2rem;
+      padding-bottom: 1rem; border-bottom: 1px solid #e8e8e8;
+    }
+    .slide-meta span::before { content: ''; }
+
+    .slide-desc { font-size: 0.95rem; line-height: 1.72; color: #333; margin-bottom: 1.5rem; }
+
+    .slide-stats { display: flex; flex-wrap: wrap; gap: 0.8rem 2rem; }
+    .stat { display: flex; flex-direction: column; gap: 0.2rem; }
+    .stat-label { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: #aaa; }
+    .stat-value { font-size: 0.85rem; font-weight: 700; color: #111; }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      background: #fff; border-top: 1px solid #e8e8e8;
+      display: flex; align-items: stretch; height: 56px;
+    }
+    .nav-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      gap: 0.4rem; background: none; border: none; cursor: pointer;
+      font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: #111;
+      transition: background 0.12s; border-right: 1px solid #e8e8e8;
+    }
+    .nav-btn:last-child { border-right: none; }
+    .nav-btn:hover:not(:disabled) { background: #002FA7; color: #fff; }
+    .nav-btn:disabled { color: #ccc; cursor: default; }
+    .nav-btn.next { background: #111; color: #fff; }
+    .nav-btn.next:hover:not(:disabled) { background: #002FA7; }
+    .nav-btn.next:disabled { background: #e8e8e8; color: #aaa; }
+
+    @media (max-width: 480px) {
+      .slide-info { padding: 1.5rem 1rem 6rem; }
+      .slide-title { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <a class="topbar-back" href="portfolio.html">← Projects</a>
+    <div class="topbar-title" id="topTitle">Loading…</div>
+    <div class="topbar-counter" id="topCounter"></div>
+  </div>
+
+  <!-- VIEWER -->
+  <div class="viewer">
+    <div class="slide-image-wrap" id="imageWrap"></div>
+    <div class="slide-info" id="slideInfo"></div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn" id="btnPrev" onclick="navigate(-1)">← Prev</button>
+    <button class="nav-btn next" id="btnNext" onclick="navigate(1)">Next →</button>
+  </div>
+
+  <script src="projects-data.js"></script>
+  <script>
+    var cat = null;
+    var slideIndex = 0;
+
+    // Read URL param
+    var params = new URLSearchParams(window.location.search);
+    var catId = params.get('cat') || 'hospitality';
+    slideIndex = parseInt(params.get('slide') || '0', 10);
+
+    // Find category
+    for (var i = 0; i < PROJECTS.length; i++) {
+      if (PROJECTS[i].id === catId) { cat = PROJECTS[i]; break; }
+    }
+    if (!cat) { cat = PROJECTS[0]; }
+
+    // Set page title
+    document.title = cat.title + ' — Jordan Yerbury';
+    document.getElementById('topTitle').textContent = cat.title;
+
+    function render() {
+      var slides = cat.slides;
+      if (slideIndex < 0) slideIndex = 0;
+      if (slideIndex >= slides.length) slideIndex = slides.length - 1;
+
+      var s = slides[slideIndex];
+      var total = slides.length;
+
+      // Counter
+      document.getElementById('topCounter').textContent = (slideIndex + 1) + ' / ' + total;
+
+      // Image
+      var imgWrap = document.getElementById('imageWrap');
+      if (s.img) {
+        imgWrap.innerHTML = '<img src="' + s.img + '" alt="' + (s.title || '') + '"/>';
+      } else {
+        imgWrap.innerHTML = '<div class="no-image"><span>Image Coming Soon</span></div>';
+      }
+
+      // Stats HTML
+      var statsHTML = '';
+      if (s.stats && s.stats.length) {
+        statsHTML = '<div class="slide-stats">';
+        s.stats.forEach(function(st) {
+          statsHTML += '<div class="stat"><span class="stat-label">' + st.label + '</span><span class="stat-value">' + st.value + '</span></div>';
+        });
+        statsHTML += '</div>';
+      }
+
+      // Info
+      document.getElementById('slideInfo').innerHTML =
+        '<div class="slide-type">' + cat.title + '</div>' +
+        '<h1 class="slide-title">' + (s.title || '') + '</h1>' +
+        (s.sub ? '<p class="slide-sub">' + s.sub + '</p>' : '') +
+        '<div class="slide-meta">' +
+          (s.role   ? '<span>' + s.role + '</span>'   : '') +
+          (s.firm   ? '<span>' + s.firm + '</span>'   : '') +
+          (s.loc    ? '<span>' + s.loc + '</span>'    : '') +
+          (s.period ? '<span>' + s.period + '</span>' : '') +
+        '</div>' +
+        (s.text ? '<p class="slide-desc">' + s.text + '</p>' : '') +
+        statsHTML;
+
+      // Buttons
+      document.getElementById('btnPrev').disabled = (slideIndex === 0);
+      document.getElementById('btnNext').disabled = (slideIndex === total - 1);
+
+      // Scroll to top of content
+      window.scrollTo(0, 0);
+    }
+
+    function navigate(dir) {
+      slideIndex += dir;
+      render();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  navigate(1);
+      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    navigate(-1);
+      if (e.key === 'Escape') window.location.href = 'portfolio.html';
+    });
+
+    // Touch swipe
+    var touchStartX = 0;
+    document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, {passive:true});
+    document.addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+    }, {passive:true});
+
+    render();
+  </script>
+
+</body>
+</html>
