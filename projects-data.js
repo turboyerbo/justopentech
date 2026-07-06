@@ -29,11 +29,13 @@ var SECTIONS = [
         sub:  'on Stampede Park · NORR Architects & Engineers · 2025–Present',
         desc: '318-key, 17-storey full-service hotel. First year-round hospitality anchor in Calgary\'s emerging Culture + Entertainment District. Western gateway to Stampede Park integrated with the BMO Centre. $330M CAD · Truman Development / Marriott.',
         images: [
-          { thumb: P+'01__Cover_Hospitality_Hero_16_9.png', full: P+'01__Cover_Hospitality_Hero_16_9.png', cap: 'Autograph Collection Hotel Calgary — exterior render' },
-          // Upload: autograph_hotel_site_plan.jpg       → site operations plan (10-day Stampede)
-          // Upload: autograph_hotel_floor_plan.jpg      → Level 01 + podium floor plan
-          // Upload: autograph_hotel_elevation.jpg       → North elevation, porte-cochère
-          // Upload: autograph_hotel_lobby_detail.jpg    → hit-and-miss brick screen + lighting detail
+          { thumb: T+'hospitality_autograph_render_exterior.jpg',  full: F+'hospitality_autograph_render_exterior.png',  cap: 'Autograph Collection Hotel Calgary — exterior render, Stampede Park' },
+          { thumb: T+'hospitality_autograph_elevation_north.jpg',  full: F+'hospitality_autograph_elevation_north.png',  cap: 'North elevation 1:750 — retractable roof + porte-cochère' },
+          { thumb: T+'hospitality_autograph_plan_index.jpg',       full: F+'hospitality_autograph_plan_index.png',       cap: 'Keyplan — podium & high roof index 1:750' },
+          { thumb: T+'hospitality_autograph_plan_fire_safety.jpg', full: F+'hospitality_autograph_plan_fire_safety.png', cap: 'Fire safety plan — Level 01, Flores Ladue Parade SE 1:400' },
+          { thumb: T+'hospitality_autograph_site_operations.jpg',  full: F+'hospitality_autograph_site_operations.png',  cap: 'Site operations plan — 10-day Stampede event 1:2000' },
+          { thumb: T+'hospitality_autograph_lobby_stair_plan.jpg', full: F+'hospitality_autograph_lobby_stair_plan.png', cap: 'Main lobby stair — alternative solution for interconnected floors 1:200' },
+          { thumb: T+'hospitality_autograph_lighting_detail.jpg',  full: F+'hospitality_autograph_lighting_detail.png',  cap: 'Lighting detail — hit-and-miss brick screen + removable channel cavity 1:5' },
         ]
       },
       {
