@@ -6,389 +6,488 @@
   <title>Projects — Jordan Yerbury, Architect</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; background: #fff; color: #111; min-height: 100%; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; background: #fff; color: #111; }
 
     /* ── PASSWORD GATE ── */
     #gate {
       position: fixed; inset: 0; z-index: 9999;
-      background: #002FA7;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 2rem; padding: 2rem;
+      background: #002FA7; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1.8rem; padding: 2rem;
     }
-    .gate-logo svg { display: block; }
-    .gate-label {
-      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.55); text-align: center;
-    }
-    .gate-title {
-      font-size: 1.1rem; font-weight: 900; text-transform: uppercase;
-      letter-spacing: 0.08em; color: #fff; text-align: center;
-    }
-    .gate-form { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; max-width: 300px; }
+    .gate-label { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-align: center; }
+    .gate-title { font-size: 1rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; text-align: center; }
+    .gate-form { display: flex; flex-direction: column; gap: 0.7rem; width: 100%; max-width: 280px; }
     .gate-form input {
       background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
-      color: #fff; padding: 0.85rem 1rem; font-family: Arial, sans-serif;
-      font-size: 1rem; letter-spacing: 0.08em; outline: none; width: 100%;
-      transition: border-color 0.15s;
+      color: #fff; padding: 0.8rem 1rem; font-family: Arial, sans-serif; font-size: 0.95rem;
+      outline: none; width: 100%; letter-spacing: 0.06em; transition: border-color 0.15s;
     }
-    .gate-form input::placeholder { color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
+    .gate-form input::placeholder { color: rgba(255,255,255,0.3); }
     .gate-form input:focus { border-color: rgba(255,255,255,0.8); }
     .gate-form button {
       background: #fff; color: #002FA7; border: none; cursor: pointer;
-      padding: 0.85rem; font-family: Arial, sans-serif; font-size: 0.8rem;
-      font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase;
-      transition: background 0.15s;
+      padding: 0.8rem; font-family: Arial, sans-serif; font-size: 0.78rem;
+      font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; transition: background 0.15s;
     }
-    .gate-form button:hover { background: #e8eaf5; }
-    .gate-error {
-      font-size: 0.72rem; letter-spacing: 0.08em; color: #ffcccc;
-      text-align: center; display: none;
-    }
+    .gate-form button:hover { background: #e0e4f5; }
+    .gate-error { font-size: 0.7rem; color: #ffaaaa; text-align: center; display: none; letter-spacing: 0.06em; }
 
     /* ── NAV ── */
-    nav { position: fixed; top: 0; right: 0; padding: 1.4rem 1.8rem; z-index: 100; }
+    nav { position: fixed; top: 0; right: 0; padding: 1.2rem 1.6rem; z-index: 100; }
     .jot-wrap { position: relative; display: inline-block; }
-    .jot-btn {
-      background: #002FA7; border-radius: 4px; padding: 0.45rem 0.55rem;
-      border: none; cursor: pointer; display: flex; align-items: center;
-    }
+    .jot-btn { background: #002FA7; border-radius: 4px; padding: 0.4rem 0.5rem; border: none; cursor: pointer; display: flex; align-items: center; }
     .jot-btn:hover { background: #001e6e; }
     .dropdown {
-      position: absolute; top: calc(100% + 0.5rem); right: 0; min-width: 210px; background: #fff;
+      position: absolute; top: calc(100% + 0.5rem); right: 0; min-width: 200px; background: #fff;
       display: flex; flex-direction: column; opacity: 0; pointer-events: none;
       transform: translateY(-6px); transition: opacity 0.18s ease, transform 0.18s ease;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.16);
     }
     .jot-wrap:hover .dropdown, .jot-wrap:focus-within .dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
     .dropdown a {
-      display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.1rem;
-      color: #002FA7; text-decoration: none; font-size: 0.82rem; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid #e4e8f5;
+      display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1rem;
+      color: #002FA7; text-decoration: none; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid #e8eaf5;
       transition: background 0.12s, color 0.12s;
     }
     .dropdown a:last-child { border-bottom: none; }
     .dropdown a:hover { background: #002FA7; color: #fff; }
     .dropdown a.active { border-left: 3px solid #002FA7; }
 
-    /* ── PAGE ── */
-    .page { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+    /* ── PAGE WRAPPER ── */
+    .page { max-width: 1280px; margin: 0 auto; padding: 4.5rem 1.5rem 4rem; }
 
     /* ── HEADER ── */
     .port-header {
-      display: flex; flex-wrap: wrap; align-items: flex-end;
-      justify-content: space-between; gap: 1rem;
-      padding-bottom: 2rem; border-bottom: 2px solid #111; margin-bottom: 0;
+      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+      gap: 1rem; padding-bottom: 1.5rem; border-bottom: 2px solid #111; margin-bottom: 0;
     }
-    .port-title { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; }
-    .port-sub { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #777; margin-top: 0.5rem; }
-    .port-sub .sep { margin: 0 0.4rem; opacity: 0.4; }
+    .port-title { font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.02em; }
+    .port-sub { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #888; margin-top: 0.4rem; }
+    .port-sub .sep { margin: 0 0.35rem; }
     .dl-btn {
-      display: inline-flex; flex-direction: column; align-items: center;
-      background: #002FA7; color: #fff; padding: 0.7rem 1.2rem; text-decoration: none;
-      font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-      transition: background 0.15s; flex-shrink: 0;
+      display: inline-flex; flex-direction: column; align-items: center; background: #002FA7;
+      color: #fff; padding: 0.65rem 1.1rem; text-decoration: none; font-weight: 700;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.15s; flex-shrink: 0;
     }
     .dl-btn:hover { background: #001e6e; }
-    .dl-size { font-size: 0.58rem; font-weight: 400; opacity: 0.7; margin-top: 0.15rem; }
+    .dl-size { font-size: 0.55rem; font-weight: 400; opacity: 0.65; margin-top: 0.1rem; }
 
-    /* ── UNDER CONSTRUCTION NOTICE ── */
+    /* ── NOTICE ── */
     .notice {
-      background: #f9f5e8; border-left: 4px solid #c8a000;
-      padding: 1.2rem 1.5rem; margin: 2rem 0;
+      background: #fffbea; border-left: 3px solid #c8a000;
+      padding: 1rem 1.2rem; margin: 1.5rem 0;
       display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem;
     }
-    .notice-text { flex: 1; min-width: 220px; }
-    .notice-label {
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em;
-      text-transform: uppercase; color: #c8a000; margin-bottom: 0.4rem;
-    }
-    .notice p { font-size: 0.85rem; line-height: 1.65; color: #444; }
+    .notice-text { flex: 1; min-width: 200px; }
+    .notice-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b08000; margin-bottom: 0.3rem; }
+    .notice p { font-size: 0.8rem; line-height: 1.6; color: #555; }
     .notice a { color: #002FA7; }
-    .notice-contact { display: flex; flex-direction: column; gap: 0.2rem; flex-shrink: 0; }
-    .notice-contact a {
-      font-size: 0.78rem; font-weight: 700; color: #111; text-decoration: none;
-      letter-spacing: 0.02em; display: flex; align-items: center; gap: 0.4rem;
-    }
+    .notice-contact { display: flex; flex-direction: column; gap: 0.2rem; flex-shrink: 0; justify-content: center; }
+    .notice-contact a { font-size: 0.75rem; font-weight: 700; color: #111; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
     .notice-contact a:hover { color: #002FA7; }
 
-    /* ── GRID ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1px; background: #ddd; border: 1px solid #ddd;
+    /* ── SECTION INDEX (top nav) ── */
+    .section-index {
+      display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 1rem 0;
+      border-bottom: 1px solid #e8e8e8; margin-bottom: 0;
     }
-    @media (max-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 540px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    .section-index a {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #888; text-decoration: none; padding: 0.25rem 0.6rem; border: 1px solid #e0e0e0;
+      transition: all 0.12s; white-space: nowrap;
+    }
+    .section-index a:hover { background: #002FA7; color: #fff; border-color: #002FA7; }
 
-    .card {
-      background: #fafafa; display: flex; flex-direction: column;
+    /* ── SECTIONS ── */
+    .theme-section { padding: 2rem 0 0.5rem; border-top: 1px solid #e0e0e0; margin-top: 1rem; }
+    .theme-section:first-of-type { border-top: none; margin-top: 0; }
+
+    .section-head {
+      display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .section-num { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; color: #bbb; }
+    .section-title { font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; }
+
+    /* ── PROJECT BLOCK ── */
+    .project-block { margin-bottom: 2.2rem; }
+
+    .project-head { margin-bottom: 0.8rem; }
+    .project-name { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .project-sub  { font-size: 0.68rem; color: #888; margin-top: 0.15rem; letter-spacing: 0.02em; }
+
+    /* ── THUMBNAIL GRID ── */
+    .thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 6px;
+    }
+
+    .thumb-item {
+      position: relative; cursor: pointer; overflow: hidden; background: #f0f0f0;
+      aspect-ratio: 16/9;
+    }
+    .thumb-item:hover .thumb-overlay { opacity: 1; }
+    .thumb-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.3s ease;
+    }
+    .thumb-item:hover img { transform: scale(1.04); }
+    .thumb-overlay {
+      position: absolute; inset: 0; background: rgba(0,47,167,0.6);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s;
+      font-size: 1.5rem; color: #fff;
+    }
+
+    /* Placeholder for images not yet uploaded */
+    .thumb-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.4rem;
+      background: #f5f5f5; cursor: default;
+    }
+    .thumb-placeholder svg { opacity: 0.25; }
+    .thumb-placeholder span { font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.93);
+      display: none; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 2rem 1rem 1.5rem; cursor: pointer; text-decoration: none;
-      color: #111; min-height: 170px; transition: background 0.18s, color 0.18s;
-      position: relative;
     }
-    .card:hover { background: #002FA7; color: #fff; }
-    .card-num {
-      position: absolute; top: 0.7rem; left: 0.85rem;
-      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em;
-      color: #ccc; transition: color 0.18s;
+    #lightbox.open { display: flex; }
+
+    .lb-img-wrap {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 3rem 4rem 0.5rem; min-height: 0;
     }
-    .card:hover .card-num { color: rgba(255,255,255,0.4); }
-    .card-icon { margin-bottom: 0.9rem; transition: stroke 0.18s; }
-    .card-title {
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; text-align: center; line-height: 1.3;
+    .lb-img-wrap img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      display: block; user-select: none;
     }
+
+    .lb-info {
+      width: 100%; padding: 0.8rem 4rem 1rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      flex-shrink: 0;
+    }
+    .lb-caption { font-size: 0.8rem; color: rgba(255,255,255,0.7); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lb-counter { font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+
+    .lb-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; color: rgba(255,255,255,0.55);
+      font-size: 1.6rem; cursor: pointer; line-height: 1; padding: 0.25rem;
+      transition: color 0.15s;
+    }
+    .lb-close:hover { color: #fff; }
+
+    .lb-prev, .lb-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer;
+      padding: 0.9rem 0.75rem; line-height: 1; transition: all 0.15s;
+    }
+    .lb-prev:hover, .lb-next:hover { background: #002FA7; border-color: #002FA7; color: #fff; }
+    .lb-prev:disabled, .lb-next:disabled { opacity: 0.18; cursor: default; }
+    .lb-prev { left: 0.8rem; }
+    .lb-next { right: 0.8rem; }
+
+    /* Project desc in lightbox */
+    .lb-desc {
+      display: none; /* shown when clicking caption/info area */
+      position: absolute; bottom: 3.5rem; left: 4rem; right: 4rem;
+      background: rgba(0,0,0,0.8); padding: 1rem 1.2rem;
+      font-size: 0.78rem; line-height: 1.65; color: rgba(255,255,255,0.8);
+      max-width: 680px; border-left: 3px solid #002FA7;
+    }
+    .lb-desc.visible { display: block; }
+    .lb-info-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5);
+      font-family: Arial, sans-serif; font-size: 0.62rem; letter-spacing: 0.1em;
+      text-transform: uppercase; cursor: pointer; padding: 0.25rem 0.6rem;
+      transition: all 0.15s; flex-shrink: 0;
+    }
+    .lb-info-btn:hover { background: #002FA7; border-color: #002FA7; color: #fff; }
 
     /* ── FOOTER ── */
     footer {
-      margin-top: 4rem; background: #111; color: rgba(255,255,255,0.55);
-      font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 1.6rem 2rem; display: flex; flex-wrap: wrap;
-      align-items: center; justify-content: space-between; gap: 0.8rem;
+      background: #111; color: rgba(255,255,255,0.5); font-size: 0.68rem;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 1.4rem 1.5rem;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.7rem;
     }
-    footer a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.15s; }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s; }
     footer a:hover { color: #fff; }
-    .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .thumb-grid { grid-template-columns: repeat(2, 1fr); }
+      .lb-img-wrap { padding: 3rem 1rem 0.5rem; }
+      .lb-info { padding: 0.6rem 1rem 0.8rem; }
+      .lb-prev { left: 0.3rem; } .lb-next { right: 0.3rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ── PASSWORD GATE ─────────────────────────────── -->
-  <div id="gate">
-    <div class="gate-logo">
-      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="22" width="56" height="56">
+<!-- ── PASSWORD GATE ── -->
+<div id="gate">
+  <svg viewBox="0 0 512 512" fill="none" stroke="white" stroke-width="22" width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 86,45 L 194,145 Q 205,155 205,170 L 205,428 Q 205,448 185,448 L 95,448 Q 75,448 75,428 L 75,50 Q 75,35 86,45 Z"/>
+    <path d="M 426,45 L 318,145 Q 307,155 307,170 L 307,428 Q 307,448 327,448 L 417,448 Q 437,448 437,428 L 437,50 Q 437,35 426,45 Z"/>
+  </svg>
+  <div>
+    <div class="gate-label">Just Open Technologies</div>
+    <div class="gate-title">Private Portfolio</div>
+  </div>
+  <div class="gate-form">
+    <input type="password" id="pw" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter')submitPw()"/>
+    <button onclick="submitPw()">Enter</button>
+    <div class="gate-error" id="gateErr">Incorrect password.</div>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="jot-wrap">
+    <button class="jot-btn" aria-label="Menu" aria-haspopup="true">
+      <svg viewBox="0 0 512 512" fill="none" stroke="white" stroke-width="22" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
         <path d="M 86,45 L 194,145 Q 205,155 205,170 L 205,428 Q 205,448 185,448 L 95,448 Q 75,448 75,428 L 75,50 Q 75,35 86,45 Z"/>
         <path d="M 426,45 L 318,145 Q 307,155 307,170 L 307,428 Q 307,448 327,448 L 417,448 Q 437,448 437,428 L 437,50 Q 437,35 426,45 Z"/>
       </svg>
-    </div>
-    <div>
-      <div class="gate-label">Just Open Technologies</div>
-      <div class="gate-title">Private Portfolio</div>
-    </div>
-    <div class="gate-form">
-      <input type="password" id="pw" placeholder="Enter password" autocomplete="off"
-             onkeydown="if(event.key==='Enter')submitPw()"/>
-      <button onclick="submitPw()">Enter</button>
-      <div class="gate-error" id="gateErr">Incorrect password. Please try again.</div>
-    </div>
-  </div>
-
-  <!-- ── NAV ───────────────────────────────────────── -->
-  <nav>
-    <div class="jot-wrap">
-      <button class="jot-btn" aria-label="Menu" aria-haspopup="true">
-        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="22" width="38" height="38">
-          <path d="M 86,45 L 194,145 Q 205,155 205,170 L 205,428 Q 205,448 185,448 L 95,448 Q 75,448 75,428 L 75,50 Q 75,35 86,45 Z"/>
-          <path d="M 426,45 L 318,145 Q 307,155 307,170 L 307,428 Q 307,448 327,448 L 417,448 Q 437,448 437,428 L 437,50 Q 437,35 426,45 Z"/>
-        </svg>
-      </button>
-      <div class="dropdown" role="menu">
-        <a href="https://staircode.app" target="_blank" rel="noopener">
-          <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="border-radius:3px;flex-shrink:0">
-            <rect width="512" height="512" fill="#1050C8" rx="52"/>
-            <path d="M 413,165 A 182,182 0 0,1 165,413" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
-            <path d="M 99,347 A 182,182 0 0,1 347,99" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
-            <circle cx="256" cy="256" r="157" fill="white"/>
-            <path d="M 148,200 L 282,200 L 282,310 L 368,310" fill="none" stroke="#7A8CA0" stroke-width="44" stroke-linecap="square"/>
-          </svg>
-          StairCode
-        </a>
-        <a href="/portfolio" class="active">Projects</a>
-        <a href="https://justopenarch.com" target="_blank" rel="noopener">Just Open Arch</a>
-        <a href="/about">About</a>
-        <a href="/blog">Blog</a>
-        <a href="/legal">Legal</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ── PAGE ──────────────────────────────────────── -->
-  <div class="page">
-
-    <div class="port-header">
-      <div>
-        <h1 class="port-title">Selected<br>Works</h1>
-        <p class="port-sub">Jordan Yerbury<span class="sep">·</span>Architect OAA<span class="sep">·</span>MRAIC<span class="sep">·</span>AIA</p>
-      </div>
-      <a class="dl-btn" href="/Jordan_Yerbury_Portfolio_2026.pdf" download>
-        ↓ Download Portfolio
-        <span class="dl-size">PDF · High Resolution · 30 MB</span>
+    </button>
+    <div class="dropdown">
+      <a href="https://staircode.app" target="_blank" rel="noopener">
+        <svg viewBox="0 0 512 512" width="20" height="20" style="border-radius:3px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+          <rect width="512" height="512" fill="#1050C8" rx="52"/>
+          <path d="M 413,165 A 182,182 0 0,1 165,413" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
+          <path d="M 99,347 A 182,182 0 0,1 347,99" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
+          <circle cx="256" cy="256" r="157" fill="white"/>
+          <path d="M 148,200 L 282,200 L 282,310 L 368,310" fill="none" stroke="#7A8CA0" stroke-width="44" stroke-linecap="square"/>
+        </svg>StairCode
       </a>
-    </div>
-
-    <!-- Under Construction Notice -->
-    <div class="notice">
-      <div class="notice-text">
-        <div class="notice-label">⚠ Site Under Construction</div>
-        <p>This portfolio page is currently being built out. Project images and descriptions are being added progressively. In the meantime, please <a href="/Jordan_Yerbury_Portfolio_2026.pdf" download><strong>download the PDF portfolio</strong></a> for the complete body of work. Thank you for your patience — Jordan Yerbury.</p>
-      </div>
-      <div class="notice-contact">
-        <a href="mailto:yerbury@gmail.com">✉ yerbury@gmail.com</a>
-        <a href="tel:+16474102847">✆ +1 (647) 410-2847</a>
-      </div>
-    </div>
-
-    <!-- Project Grid -->
-    <div class="grid" id="grid"></div>
-
-  </div>
-
-  <footer>
-    <span>© 2026 Just Open Technologies Inc.</span>
-    <div class="footer-links">
+      <a href="/portfolio" class="active">Projects</a>
+      <a href="https://justopenarch.com" target="_blank" rel="noopener">Just Open Arch</a>
       <a href="/about">About</a>
       <a href="/blog">Blog</a>
       <a href="/legal">Legal</a>
-      <a href="mailto:hello@justopen.tech">hello@justopen.tech</a>
     </div>
-  </footer>
+  </div>
+</nav>
 
-  <script src="projects-data.js"></script>
-  <script>
-    // ── PASSWORD ────────────────────────────────────────────
-    var PASS = '@rup1895';
-    var SESS = 'jot_portfolio_auth';
+<!-- ── LIGHTBOX ── -->
+<div id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" onclick="closeLb()" title="Close (Esc)">×</button>
+  <button class="lb-prev" id="lbPrev" onclick="lbNav(-1)">&#8592;</button>
+  <button class="lb-next" id="lbNext" onclick="lbNav(1)">&#8594;</button>
+  <div class="lb-img-wrap" id="lbImgWrap">
+    <img id="lbImg" src="" alt=""/>
+  </div>
+  <div id="lbDescBox" class="lb-desc"></div>
+  <div class="lb-info">
+    <span class="lb-caption" id="lbCap"></span>
+    <button class="lb-info-btn" id="lbInfoBtn" onclick="toggleDesc()">Info</button>
+    <span class="lb-counter" id="lbCounter"></span>
+  </div>
+</div>
 
-    function submitPw() {
-      var v = document.getElementById('pw').value;
-      if (v === PASS) {
-        sessionStorage.setItem(SESS, '1');
-        document.getElementById('gate').style.display = 'none';
-      } else {
-        document.getElementById('gateErr').style.display = 'block';
-        document.getElementById('pw').value = '';
-        document.getElementById('pw').focus();
-      }
-    }
+<!-- ── PAGE ── -->
+<div class="page">
 
-    (function() {
-      if (sessionStorage.getItem(SESS) === '1') {
-        document.getElementById('gate').style.display = 'none';
-      } else {
-        // keep gate visible; focus the input
-        window.addEventListener('load', function() {
-          document.getElementById('pw').focus();
-        });
-      }
-    })();
+  <div class="port-header">
+    <div>
+      <h1 class="port-title">Selected Works</h1>
+      <p class="port-sub">Jordan Yerbury<span class="sep">·</span>Architect OAA<span class="sep">·</span>MRAIC<span class="sep">·</span>AIA</p>
+    </div>
+    <a class="dl-btn" href="/Jordan_Yerbury_Portfolio_2026.pdf" download>
+      ↓ Download Portfolio
+      <span class="dl-size">PDF · High Resolution</span>
+    </a>
+  </div>
 
-    // ── ICONS ───────────────────────────────────────────────
-    // Each icon is an SVG string using stroke="currentColor"
-    var ICONS = {
-      hospitality:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<rect x="6" y="18" width="36" height="24"/>' +
-          '<polyline points="2,18 24,6 46,18"/>' +
-          '<rect x="13" y="28" width="6" height="14"/>' +
-          '<rect x="29" y="28" width="6" height="14"/>' +
-          '<rect x="13" y="20" width="5" height="5"/>' +
-          '<rect x="23" y="20" width="5" height="5"/>' +
-          '<rect x="30" y="22" width="8" height="3"/>' +
-        '</svg>',
+  <div class="notice">
+    <div class="notice-text">
+      <div class="notice-label">⚠ Site Under Construction</div>
+      <p>Project images are being added progressively. For the complete portfolio please <a href="/Jordan_Yerbury_Portfolio_2026.pdf" download><strong>download the PDF</strong></a>. Click any thumbnail to view full size. Thank you — Jordan Yerbury.</p>
+    </div>
+    <div class="notice-contact">
+      <a href="mailto:yerbury@gmail.com">✉ yerbury@gmail.com</a>
+      <a href="tel:+16474102847">✆ +1 (647) 410-2847</a>
+    </div>
+  </div>
 
-      gaming:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<rect x="6" y="6" width="36" height="36" rx="5"/>' +
-          '<circle cx="16" cy="16" r="2.5" fill="currentColor" stroke="none"/>' +
-          '<circle cx="32" cy="16" r="2.5" fill="currentColor" stroke="none"/>' +
-          '<circle cx="16" cy="32" r="2.5" fill="currentColor" stroke="none"/>' +
-          '<circle cx="32" cy="32" r="2.5" fill="currentColor" stroke="none"/>' +
-          '<circle cx="24" cy="24" r="2.5" fill="currentColor" stroke="none"/>' +
-        '</svg>',
+  <!-- Section index -->
+  <div class="section-index" id="sectionIndex"></div>
 
-      industrial:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<polyline points="2,24 14,14 14,24 26,14 26,24 38,14 38,24"/>' +
-          '<rect x="2" y="24" width="44" height="18"/>' +
-          '<rect x="8" y="32" width="8" height="10"/>' +
-          '<rect x="22" y="32" width="8" height="10"/>' +
-          '<rect x="36" y="28" width="6" height="6"/>' +
-        '</svg>',
+  <!-- Project sections injected by JS -->
+  <div id="content"></div>
 
-      mixed:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<rect x="10" y="4" width="28" height="12"/>' +
-          '<rect x="6" y="16" width="36" height="12"/>' +
-          '<rect x="4" y="28" width="40" height="14"/>' +
-          '<line x1="14" y1="28" x2="14" y2="42"/>' +
-          '<line x1="24" y1="28" x2="24" y2="42"/>' +
-          '<line x1="34" y1="28" x2="34" y2="42"/>' +
-        '</svg>',
+</div><!-- /page -->
 
-      residential:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<polyline points="4,22 24,6 44,22"/>' +
-          '<rect x="8" y="22" width="32" height="20"/>' +
-          '<rect x="18" y="30" width="12" height="12"/>' +
-          '<rect x="10" y="26" width="7" height="7"/>' +
-          '<rect x="31" y="26" width="7" height="7"/>' +
-        '</svg>',
+<footer>
+  <span>© 2026 Just Open Technologies Inc.</span>
+  <div class="footer-links">
+    <a href="/about">About</a>
+    <a href="/blog">Blog</a>
+    <a href="/legal">Legal</a>
+    <a href="mailto:hello@justopen.tech">hello@justopen.tech</a>
+  </div>
+</footer>
 
-      retail:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<rect x="4" y="18" width="40" height="24"/>' +
-          '<polyline points="4,18 8,6 40,6 44,18"/>' +
-          '<rect x="14" y="26" width="20" height="16"/>' +
-          '<line x1="14" y1="26" x2="34" y2="26"/>' +
-          '<line x1="24" y1="18" x2="24" y2="42"/>' +
-        '</svg>',
+<script src="projects-data.js"></script>
+<script>
+// ── PASSWORD ────────────────────────────────────────────────
+var PASS = '@rup1895', SESS = 'jot_portfolio_auth';
+function submitPw() {
+  if (document.getElementById('pw').value === PASS) {
+    sessionStorage.setItem(SESS, '1');
+    document.getElementById('gate').style.display = 'none';
+  } else {
+    document.getElementById('gateErr').style.display = 'block';
+    document.getElementById('pw').value = '';
+    document.getElementById('pw').focus();
+  }
+}
+(function() {
+  if (sessionStorage.getItem(SESS) === '1') {
+    document.getElementById('gate').style.display = 'none';
+  } else {
+    window.addEventListener('load', function() { document.getElementById('pw').focus(); });
+  }
+})();
 
-      engineering:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<circle cx="24" cy="24" r="8"/>' +
-          '<circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"/>' +
-          '<line x1="24" y1="4" x2="24" y2="12"/>' +
-          '<line x1="24" y1="36" x2="24" y2="44"/>' +
-          '<line x1="4" y1="24" x2="12" y2="24"/>' +
-          '<line x1="36" y1="24" x2="44" y2="24"/>' +
-          '<line x1="9" y1="9" x2="15" y2="15"/>' +
-          '<line x1="33" y1="33" x2="39" y2="39"/>' +
-          '<line x1="39" y1="9" x2="33" y2="15"/>' +
-          '<line x1="15" y1="33" x2="9" y2="39"/>' +
-        '</svg>',
+// ── LIGHTBOX ────────────────────────────────────────────────
+var lbImages = []; // flat array for current section: [{src, cap, desc}]
+var lbIndex  = 0;
 
-      public:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<circle cx="24" cy="14" r="8"/>' +
-          '<line x1="24" y1="22" x2="24" y2="38"/>' +
-          '<line x1="24" y1="30" x2="14" y2="38"/>' +
-          '<line x1="24" y1="30" x2="34" y2="38"/>' +
-          '<line x1="4" y1="44" x2="44" y2="44"/>' +
-        '</svg>',
+function openLb(imgs, idx) {
+  lbImages = imgs;
+  lbIndex  = idx;
+  renderLb();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('lbDescBox').classList.remove('visible');
+}
+function lbNav(dir) {
+  lbIndex = Math.max(0, Math.min(lbImages.length - 1, lbIndex + dir));
+  renderLb();
+}
+function renderLb() {
+  var s = lbImages[lbIndex];
+  document.getElementById('lbImg').src = s.full || s.thumb || s.src;
+  document.getElementById('lbImg').alt = s.cap || '';
+  document.getElementById('lbCap').textContent = s.cap || '';
+  document.getElementById('lbDescBox').textContent = s.desc || '';
+  document.getElementById('lbCounter').textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+  document.getElementById('lbPrev').disabled = (lbIndex === 0);
+  document.getElementById('lbNext').disabled = (lbIndex === lbImages.length - 1);
+  document.getElementById('lbInfoBtn').style.display = s.desc ? '' : 'none';
+  document.getElementById('lbDescBox').classList.remove('visible');
+}
+function toggleDesc() {
+  document.getElementById('lbDescBox').classList.toggle('visible');
+}
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'ArrowLeft')  lbNav(-1);
+  if (e.key === 'Escape')     closeLb();
+});
+// Touch swipe
+var tsX = 0;
+document.addEventListener('touchstart', function(e) { tsX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', function(e) {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  var dx = e.changedTouches[0].clientX - tsX;
+  if (Math.abs(dx) > 50) lbNav(dx < 0 ? 1 : -1);
+}, {passive:true});
+// Click outside image
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLb();
+});
 
-      software:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<rect x="4" y="8" width="40" height="28" rx="2"/>' +
-          '<line x1="14" y1="44" x2="34" y2="44"/>' +
-          '<line x1="24" y1="36" x2="24" y2="44"/>' +
-          '<polyline points="14,22 19,27 14,32"/>' +
-          '<line x1="22" y1="32" x2="34" y2="32"/>' +
-        '</svg>',
+// ── BUILD PAGE ───────────────────────────────────────────────
+var placeholder =
+  '<div class="thumb-placeholder">' +
+    '<svg viewBox="0 0 48 48" fill="none" stroke="#bbb" stroke-width="2" width="32" height="32"><rect x="6" y="10" width="36" height="28" rx="1"/><path d="M6 34 L16 24 L24 30 L32 20 L42 34"/><circle cx="16" cy="18" r="3"/></svg>' +
+    '<span>Coming Soon</span>' +
+  '</div>';
 
-      research:
-        '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">' +
-          '<circle cx="20" cy="20" r="14"/>' +
-          '<line x1="30" y1="30" x2="44" y2="44"/>' +
-          '<line x1="14" y1="20" x2="26" y2="20"/>' +
-          '<line x1="20" y1="14" x2="20" y2="26"/>' +
-        '</svg>'
-    };
+var content = document.getElementById('content');
+var sectionIndex = document.getElementById('sectionIndex');
 
-    // ── BUILD GRID ──────────────────────────────────────────
-    var grid = document.getElementById('grid');
-    PROJECTS.forEach(function(cat) {
-      var a = document.createElement('a');
-      a.className = 'card';
-      a.href = 'project.html?cat=' + cat.id;
-      a.innerHTML =
-        '<span class="card-num">' + cat.num + '</span>' +
-        '<div class="card-icon">' + (ICONS[cat.id] || ICONS.research) + '</div>' +
-        '<div class="card-title">' + cat.title + '</div>';
-      grid.appendChild(a);
+SECTIONS.forEach(function(sec) {
+  // Gather all images in this section (across projects) for lightbox sequencing
+  var allImgs = [];
+  sec.projects.forEach(function(proj) {
+    if (!proj.images || proj.images.length === 0) return;
+    proj.images.forEach(function(img) {
+      allImgs.push({ thumb: img.thumb || img.file, full: img.full || img.thumb || img.file, cap: img.cap || proj.name, desc: proj.desc });
     });
-  </script>
+  });
+
+  // Build section HTML
+  var html = '<div class="theme-section" id="sec-' + sec.id + '">';
+  html += '<div class="section-head"><span class="section-num">' + sec.num + '</span><h2 class="section-title">' + sec.title + '</h2></div>';
+
+  sec.projects.forEach(function(proj) {
+    if (!proj.images || proj.images.length === 0) return;
+    var hasRealImages = proj.images.some(function(i) { return i.thumb || i.file || i.full; });
+    if (!hasRealImages) return;
+
+    html += '<div class="project-block">';
+    html += '<div class="project-head"><div class="project-name">' + proj.name + '</div><div class="project-sub">' + (proj.sub || '') + '</div></div>';
+    html += '<div class="thumb-grid">';
+
+    proj.images.forEach(function(img, imgIdx) {
+      // Find this image's position in the section-wide allImgs array
+      var sectionImgIdx = allImgs.findIndex(function(a) { return a.thumb === (img.thumb || img.file) && a.cap === (img.cap || proj.name); });
+      if (sectionImgIdx < 0) sectionImgIdx = 0;
+
+      var src = img.thumb || img.file || img.full;
+      if (src) {
+        html += '<div class="thumb-item" onclick="openLb(sectionImgs[\'' + sec.id + '\'],' + sectionImgIdx + ')" title="' + (img.cap || proj.name).replace(/"/g, '&quot;') + '">';
+        html += '<img src="' + src + '" alt="' + (img.cap || proj.name).replace(/"/g, '&quot;') + '" loading="lazy"/>';
+        html += '<div class="thumb-overlay">↗</div>';
+        html += '</div>';
+      }
+    });
+
+    html += '</div></div>'; // close thumb-grid + project-block
+  });
+
+  html += '</div>'; // close theme-section
+  content.insertAdjacentHTML('beforeend', html);
+
+  // Section index link (only if section has images)
+  if (allImgs.length > 0) {
+    sectionIndex.insertAdjacentHTML('beforeend', '<a href="#sec-' + sec.id + '">' + sec.num + '. ' + sec.title + '</a>');
+  }
+});
+
+// Store all section image arrays for lightbox (keyed by section id)
+var sectionImgs = {};
+SECTIONS.forEach(function(sec) {
+  var imgs = [];
+  sec.projects.forEach(function(proj) {
+    if (!proj.images) return;
+    proj.images.forEach(function(img) {
+      if (img.thumb || img.file || img.full) {
+        imgs.push({ thumb: img.thumb || img.file, full: img.full || img.thumb || img.file, cap: img.cap || proj.name, desc: proj.desc });
+      }
+    });
+  });
+  sectionImgs[sec.id] = imgs;
+});
+</script>
 
 </body>
 </html>
