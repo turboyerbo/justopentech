@@ -1,118 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Just Open Technologies</title>
-  <meta name="description" content="Just Open Technologies — software and architecture, open by design." />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; background: #002FA7; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JUSTOPEN.technologies</title>
+<meta name="description" content="Just Open Technologies — software and architecture, open by design." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800;900&display=swap">
+<style>
+  :root{
+    --ink: #FFFFFF;
+    --ground: #002FA7;
+    --ground-deep: #00248A;
+    --muted: rgba(255,255,255,.62);
+    --hairline: rgba(255,255,255,.22);
+    --display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
 
-    nav { position: fixed; top: 0; right: 0; padding: 1.4rem 1.8rem; z-index: 100; }
-    .jot-wrap { position: relative; display: inline-block; }
-    .jot-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; }
-    .jot-btn:hover svg { opacity: 0.75; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body{
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--display);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-    .dropdown {
-      position: absolute; top: calc(100% + 0.5rem); right: 0;
-      min-width: 210px; background: #fff; display: flex; flex-direction: column;
-      opacity: 0; pointer-events: none; transform: translateY(-6px);
-      transition: opacity 0.18s ease, transform 0.18s ease;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    }
-    .jot-wrap:hover .dropdown, .jot-wrap:focus-within .dropdown {
-      opacity: 1; pointer-events: all; transform: translateY(0);
-    }
-    .dropdown a {
-      display: flex; align-items: center; gap: 0.7rem;
-      padding: 0.8rem 1.1rem; color: #002FA7; text-decoration: none;
-      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; border-bottom: 1px solid #e4e8f5;
-      transition: background 0.12s, color 0.12s;
-    }
-    .dropdown a:last-child { border-bottom: none; }
-    .dropdown a:hover { background: #002FA7; color: #fff; }
-    .dropdown a svg { flex-shrink: 0; transition: stroke 0.12s; }
+  .shell{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-inline: clamp(16px, 4vw, 48px);
+    padding-block: clamp(18px, 3vw, 32px);
+    box-sizing: border-box;
+    gap: clamp(24px, 6vh, 64px);
+  }
 
-    main {
-      min-height: 100dvh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 6rem 2rem 8rem; text-align: center;
-    }
-    h1 {
-      color: #fff; font-family: Arial, Helvetica, sans-serif; font-weight: 900;
-      font-size: clamp(2.4rem, 8vw, 7rem); line-height: 1.0;
-      letter-spacing: -0.01em; text-transform: uppercase;
-    }
+  /* ---- nav ---- */
+  .nav{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: clamp(14px, 2.2vw, 28px);
+    font-size: clamp(11px, 1.1vw, 13px);
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .nav a{
+    color: var(--muted);
+    text-decoration: none;
+    padding-block: 4px;
+    border-bottom: 1px solid transparent;
+    transition: color .18s ease, border-color .18s ease;
+  }
+  .nav a:hover, .nav a:focus-visible{ color: var(--ink); border-bottom-color: var(--ink); }
+  .nav a:focus-visible{ outline: 2px solid var(--ink); outline-offset: 4px; border-bottom-color: transparent; }
 
-    footer {
-      background: #001e6e; color: rgba(255,255,255,0.55);
-      font-family: Arial, Helvetica, sans-serif; font-size: 0.72rem;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 1.6rem 2rem; display: flex; flex-wrap: wrap;
-      align-items: center; justify-content: space-between; gap: 0.8rem;
-    }
-    footer a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.15s; }
-    footer a:hover { color: #fff; }
-    .footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
-  </style>
+  /* ---- hero ---- */
+  main{
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .lockup{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    font-weight: 900;
+    font-size: clamp(2.6rem, 11.2vw, 9.5rem);
+    line-height: .96;
+    letter-spacing: -.035em;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .lockup:focus-visible{ outline: 2px solid var(--ink); outline-offset: 12px; }
+
+  .fixed-word{ white-space: nowrap; }
+
+  /* the slot: one line tall (plus a little room for descenders), clipped */
+  .slot{
+    position: relative;
+    overflow: hidden;
+    height: 1.18em;
+    align-self: center;
+    flex: 0 0 auto;
+  }
+  .reel{
+    display: flex;
+    flex-direction: column;
+    will-change: transform, filter;
+  }
+  .reel span{
+    height: 1.18em;
+    line-height: 1.18em;
+    white-space: nowrap;
+    display: block;
+  }
+  .measure{
+    position: absolute;
+    visibility: hidden;
+    white-space: nowrap;
+    pointer-events: none;
+    left: -9999px;
+    top: 0;
+  }
+
+  /* ---- footer ---- */
+  .foot{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px 24px;
+    padding-top: clamp(16px, 2vw, 24px);
+    border-top: 1px solid var(--hairline);
+    font-size: clamp(11px, 1.05vw, 13px);
+    font-weight: 500;
+    letter-spacing: .06em;
+    color: var(--muted);
+  }
+  .foot a{ color: var(--muted); text-decoration: none; }
+  .foot a:hover, .foot a:focus-visible{ color: var(--ink); }
+  .foot-links{ display: flex; flex-wrap: wrap; gap: 12px 20px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .reel{ transition: none !important; filter: none !important; }
+  }
+</style>
 </head>
 <body>
 
-  <nav>
-    <div class="jot-wrap">
-      <button class="jot-btn" aria-label="Just Open Technologies menu" aria-haspopup="true">
-        <!-- JOT logo: two panels opening upward, white stroke -->
-        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="22" width="38" height="38">
-          <path d="M 86,45 L 194,145 Q 205,155 205,170 L 205,428 Q 205,448 185,448 L 95,448 Q 75,448 75,428 L 75,50 Q 75,35 86,45 Z"/>
-          <path d="M 426,45 L 318,145 Q 307,155 307,170 L 307,428 Q 307,448 327,448 L 417,448 Q 437,448 437,428 L 437,50 Q 437,35 426,45 Z"/>
-        </svg>
-      </button>
-      <div class="dropdown" role="menu">
-
-        <a href="https://staircode.app" target="_blank" rel="noopener" role="menuitem">
-          <!-- StairCode logo -->
-          <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="border-radius:3px;flex-shrink:0">
-            <rect width="512" height="512" fill="#1050C8" rx="52"/>
-            <path d="M 413,165 A 182,182 0 0,1 165,413" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
-            <path d="M 99,347 A 182,182 0 0,1 347,99" fill="none" stroke="#F05020" stroke-width="50" stroke-linecap="butt"/>
-            <circle cx="256" cy="256" r="157" fill="white"/>
-            <path d="M 148,200 L 282,200 L 282,310 L 368,310" fill="none" stroke="#7A8CA0" stroke-width="44" stroke-linecap="square" stroke-linejoin="miter"/>
-          </svg>
-          StairCode
-        </a>
-
-        <a href="/portfolio" role="menuitem">Projects</a>
-        <a href="https://justopenarch.com" target="_blank" rel="noopener" role="menuitem">
-          <!-- JOA logo: two panels pointing to bottom V -->
-          <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="22" width="22" height="22" style="flex-shrink:0">
-            <path d="M 90,42 L 190,42 Q 205,42 205,57 L 205,318 Q 205,333 210,347 L 256,472 L 95,472 Q 75,472 75,452 L 75,57 Q 75,42 90,42 Z"/>
-            <path d="M 322,42 L 422,42 Q 437,42 437,57 L 437,452 Q 437,472 417,472 L 256,472 L 302,347 Q 307,333 307,318 L 307,57 Q 307,42 322,42 Z"/>
-          </svg>
-          Just Open Arch
-        </a>
-
-        <a href="/about" role="menuitem">About</a>
-        <a href="/blog" role="menuitem">Blog</a>
-        <a href="/legal" role="menuitem">Legal</a>
-      </div>
-    </div>
+<div class="shell">
+  <nav class="nav" aria-label="Primary">
+    <a href="https://staircode.app">StairCode</a>
+    <a href="/portfolio">Projects</a>
+    <a href="https://justopenarch.com">Just Open Arch</a>
+    <a href="/about">About</a>
+    <a href="/blog">Blog</a>
+    <a href="/legal">Legal</a>
   </nav>
 
   <main>
-    <h1>Just Open<br>Technologies</h1>
+    <button class="lockup" id="lockup" type="button" aria-label="JUSTOPEN.technologies — replay animation">
+      <span class="fixed-word">JUSTOPEN.</span><span class="slot" id="slot" aria-hidden="true"><span class="reel" id="reel"></span></span>
+      <span class="measure" id="measure">technologies</span>
+    </button>
   </main>
 
-  <footer>
+  <footer class="foot">
     <span>© 2026 Just Open Technologies Inc.</span>
-    <div class="footer-links">
+    <span class="foot-links">
       <a href="/about">About</a>
       <a href="/blog">Blog</a>
       <a href="/legal">Legal</a>
       <a href="mailto:hello@justopen.tech">hello@justopen.tech</a>
-    </div>
+    </span>
   </footer>
+</div>
+
+<script>
+(function(){
+  var WORDS = [
+    "art","architecture","building","automotive","rockets","audio","robotics",
+    "software","structures","energy","housing","cities","code","design","data",
+    "hardware","materials","acoustics","aerospace","infrastructure","fabrication",
+    "engineering","optics","transit","climate","furniture","machines","sensors",
+    "tooling","research","interiors","bridges","habitats","logistics",
+    "manufacturing","standards","drawings","systems","geometry","concrete",
+    "timber","steel","glass","daylight","airflow","zoning","permits","models"
+  ];
+  var FINAL = "technologies";
+
+  var reel = document.getElementById("reel");
+  var slot = document.getElementById("slot");
+  var measure = document.getElementById("measure");
+  var lockup = document.getElementById("lockup");
+
+  var LOOPS = 3;
+  var list = [];
+  for (var l = 0; l < LOOPS; l++){
+    var pool = WORDS.slice();
+    for (var i = pool.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+    }
+    list = list.concat(pool);
+  }
+  list.push(FINAL);
+
+  var frag = document.createDocumentFragment();
+  for (var k = 0; k < list.length; k++){
+    var s = document.createElement("span");
+    s.textContent = list[k];
+    frag.appendChild(s);
+  }
+  reel.appendChild(frag);
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var stepH = 0, distance = 0, running = false, rafId = 0;
+
+  function sizeSlot(){
+    slot.style.width = Math.ceil(measure.getBoundingClientRect().width) + "px";
+    stepH = reel.firstChild.getBoundingClientRect().height;
+    distance = stepH * (list.length - 1);
+  }
+
+  function settle(){
+    reel.style.transform = "translate3d(0," + (-distance) + "px,0)";
+    reel.style.filter = "none";
+  }
+
+  // easeOutQuint: very fast at the start, long gentle glide into the last word
+  function ease(t){ return 1 - Math.pow(1 - t, 5); }
+
+  function play(){
+    sizeSlot();
+    if (reduced){ settle(); return; }
+    if (running) return;
+    running = true;
+    var DUR = 3200;
+    var start = performance.now();
+    var prev = 0;
+
+    function frame(now){
+      var t = Math.min((now - start) / DUR, 1);
+      var e = ease(t);
+      var y = e * distance;
+      var velocity = Math.abs(y - prev);
+      prev = y;
+      var blur = Math.min(velocity * 0.09, 4.5);
+      reel.style.transform = "translate3d(0," + (-y) + "px,0)";
+      reel.style.filter = blur > 0.25 ? "blur(" + blur.toFixed(2) + "px)" : "none";
+      if (t < 1){ rafId = requestAnimationFrame(frame); }
+      else { settle(); running = false; }
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function relayout(){
+    cancelAnimationFrame(rafId);
+    running = false;
+    sizeSlot();
+    settle();
+  }
+
+  var rt;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt);
+    rt = setTimeout(relayout, 150);
+  });
+
+  lockup.addEventListener("click", function(){
+    if (running) return;
+    reel.style.transform = "translate3d(0,0,0)";
+    requestAnimationFrame(play);
+  });
+
+  function boot(){ sizeSlot(); reel.style.transform = "translate3d(0,0,0)"; play(); }
+
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(boot).catch(boot);
+  } else {
+    window.addEventListener("load", boot);
+  }
+})();
+</script>
 
 </body>
 </html>
