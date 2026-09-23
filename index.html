@@ -15,6 +15,7 @@
     --ground-deep: #00248A;
     --muted: rgba(255,255,255,.62);
     --hairline: rgba(255,255,255,.22);
+    --accent: #D63C0E;
     --display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
@@ -58,6 +59,72 @@
   }
   .nav a:hover, .nav a:focus-visible{ color: var(--ink); border-bottom-color: var(--ink); }
   .nav a:focus-visible{ outline: 2px solid var(--ink); outline-offset: 4px; border-bottom-color: transparent; }
+
+  /* ---- JUST OPEN.[____] site picker ---- */
+  .jo{ position: relative; display: inline-flex; align-items: baseline; }
+  .nav a.jo-home{ color: var(--ink); }
+  .nav a.jo-home:not([href]){ cursor: default; border-bottom-color: transparent; }
+  .jo-slot{
+    position: relative;
+    min-width: 9.5em;
+    margin-left: .35em;
+    padding: 4px 1.8em 4px .6em;
+    background: var(--accent);
+    border: 0;
+    color: var(--ink);
+    font: inherit;
+    letter-spacing: .02em;
+    text-transform: none;
+    text-align: left;
+    cursor: pointer;
+    transition: filter .18s ease;
+  }
+  .jo-slot:hover, .jo-slot[aria-expanded="true"]{ filter: brightness(1.12); }
+  .jo-slot:focus-visible{ outline: 2px solid var(--ink); outline-offset: 4px; }
+  #joWord:empty::before{ content: "\200b"; } /* keep the blank box one line tall */
+  .jo-caret{
+    position: absolute;
+    right: .6em;
+    top: 50%;
+    width: .7em;
+    height: .7em;
+    margin-top: -.35em;
+    transition: transform .18s ease;
+  }
+  .jo-slot[aria-expanded="true"] .jo-caret{ transform: rotate(180deg); }
+  .nav a.jo-go{ margin-left: .5em; color: var(--ink); letter-spacing: 0; }
+  .jo-menu{
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 50;
+    min-width: 250px;
+    max-height: min(60vh, 440px);
+    overflow-y: auto;
+    padding: 4px 0;
+    list-style: none;
+    background: var(--accent);
+    color: #fff;
+    scrollbar-color: rgba(255,255,255,.55) transparent;
+    scrollbar-width: thin;
+    box-shadow: 0 10px 36px rgba(0,0,0,.28);
+    outline: none;
+  }
+  .jo-menu li{
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: none;
+    cursor: pointer;
+  }
+  .jo-menu .jo-letter{ width: 1em; font-weight: 800; letter-spacing: 0; text-transform: uppercase; opacity: .7; }
+  .jo-menu li[aria-selected="true"]{ font-weight: 800; }
+  .jo-menu li.is-active{ background: var(--ground); color: #fff; }
+  .jo-menu li.is-active .jo-letter{ opacity: .7; }
 
   /* ---- hero ---- */
   main{
@@ -142,11 +209,11 @@
 
 <div class="shell">
   <nav class="nav" aria-label="Primary">
-    <a href="https://staircode.app">StairCode</a>
-    <a href="/portfolio">Projects</a>
-    <a href="https://justopenarch.com">Just Open Arch</a>
+    <div class="jo" id="jo">
+      <a class="jo-home" id="joHome">Just Open.</a><button class="jo-slot" id="joSlot" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="joMenu" aria-label="Choose a Just Open site"><span id="joWord"></span><svg class="jo-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><a class="jo-go" id="joGo" hidden>&#8599;</a>
+      <ul class="jo-menu" id="joMenu" role="listbox" tabindex="-1" aria-label="Just Open sites" hidden></ul>
+    </div>
     <a href="/about">About</a>
-    <a href="/blog">Blog</a>
     <a href="/legal">Legal</a>
   </nav>
 
@@ -167,6 +234,150 @@
     </span>
   </footer>
 </div>
+
+<script>
+// JUST OPEN.[____] site picker. Entries without a url are placeholders.
+(function(){
+  var SITES = [
+    { word: "architecture",   url: "https://justopenarch.com" },
+    { word: "building",       url: "https://staircode.app" },
+    { word: "canada" },
+    { word: "developers" },
+    { word: "energy" },
+    { word: "fabrication" },
+    { word: "geometry" },
+    { word: "housing" },
+    { word: "infrastructure" },
+    { word: "joinery" },
+    { word: "kinetics" },
+    { word: "landscape" },
+    { word: "materials" },
+    { word: "north" },
+    { word: "optics" },
+    { word: "planning" },
+    { word: "quarry" },
+    { word: "robotics" },
+    { word: "staircode",      url: "https://staircode.app" },
+    { word: "timber" },
+    { word: "urbanism" },
+    { word: "vernacular" },
+    { word: "water" },
+    { word: "xr" },
+    { word: "yukon" },
+    { word: "zoning" }
+  ];
+
+  var jo = document.getElementById("jo");
+  var home = document.getElementById("joHome");
+  var slot = document.getElementById("joSlot");
+  var wordEl = document.getElementById("joWord");
+  var go = document.getElementById("joGo");
+  var menu = document.getElementById("joMenu");
+  var items = [];
+  var selected = -1, active = -1;
+
+  SITES.forEach(function(site, i){
+    var li = document.createElement("li");
+    li.id = "joOpt" + i;
+    li.setAttribute("role", "option");
+    li.setAttribute("aria-selected", "false");
+    li.dataset.index = i;
+    li.innerHTML = '<span class="jo-letter"></span><span class="jo-w"></span>';
+    li.querySelector(".jo-letter").textContent = site.word.charAt(0);
+    li.querySelector(".jo-w").textContent = site.word;
+    menu.appendChild(li);
+    items.push(li);
+  });
+
+  function setActive(i){
+    if (active >= 0) items[active].classList.remove("is-active");
+    active = i;
+    if (i < 0) { menu.removeAttribute("aria-activedescendant"); return; }
+    items[i].classList.add("is-active");
+    menu.setAttribute("aria-activedescendant", items[i].id);
+    items[i].scrollIntoView({ block: "nearest" });
+  }
+
+  function isOpen(){ return !menu.hidden; }
+
+  function open(){
+    // drop the menu straight down from the orange box
+    menu.style.left = slot.offsetLeft + "px";
+    menu.hidden = false;
+    slot.setAttribute("aria-expanded", "true");
+    setActive(selected >= 0 ? selected : 0);
+    menu.focus();
+  }
+
+  function close(returnFocus){
+    menu.hidden = true;
+    slot.setAttribute("aria-expanded", "false");
+    setActive(-1);
+    if (returnFocus) slot.focus();
+  }
+
+  function select(i){
+    var site = SITES[i];
+    if (selected >= 0) items[selected].setAttribute("aria-selected", "false");
+    selected = i;
+    items[i].setAttribute("aria-selected", "true");
+    wordEl.textContent = site.word;
+    slot.setAttribute("aria-label", "Just Open." + site.word + ", change site");
+    if (site.url){
+      home.href = site.url;
+      go.href = site.url;
+      go.setAttribute("aria-label", "Go to Just Open." + site.word);
+      go.hidden = false;
+    } else {
+      home.removeAttribute("href");
+      go.removeAttribute("href");
+      go.hidden = true;
+    }
+    close(true);
+  }
+
+  slot.addEventListener("click", function(){ isOpen() ? close(true) : open(); });
+  home.addEventListener("click", function(e){
+    if (!home.hasAttribute("href")){ e.preventDefault(); open(); }
+  });
+
+  menu.addEventListener("click", function(e){
+    var li = e.target.closest("li");
+    if (li) select(+li.dataset.index);
+  });
+  menu.addEventListener("mousemove", function(e){
+    var li = e.target.closest("li");
+    if (li && +li.dataset.index !== active) setActive(+li.dataset.index);
+  });
+
+  menu.addEventListener("keydown", function(e){
+    var k = e.key;
+    if (k === "ArrowDown"){ setActive(Math.min(active + 1, items.length - 1)); }
+    else if (k === "ArrowUp"){ setActive(Math.max(active - 1, 0)); }
+    else if (k === "Home"){ setActive(0); }
+    else if (k === "End"){ setActive(items.length - 1); }
+    else if (k === "Enter" || k === " "){ if (active >= 0) select(active); }
+    else if (k === "Escape"){ close(true); }
+    else if (k === "Tab"){ close(false); return; }
+    else if (/^[a-z]$/i.test(k)){
+      // jump to the word starting with that letter
+      for (var i = 0; i < SITES.length; i++){
+        if (SITES[i].word.charAt(0) === k.toLowerCase()){ setActive(i); break; }
+      }
+    }
+    else return;
+    e.preventDefault();
+  });
+
+  slot.addEventListener("keydown", function(e){
+    if (e.key === "ArrowDown" && !isOpen()){ e.preventDefault(); open(); }
+  });
+
+  document.addEventListener("mousedown", function(e){
+    if (isOpen() && !jo.contains(e.target)) close(false);
+  });
+})();
+</script>
 
 <script>
 (function(){
